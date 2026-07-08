@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "JetBrains Mono", monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Force standard color tokens to map to the retro green & magenta scheme */
+  --color-slate-950: #050505;
+  --color-slate-900: #111111;
+  --color-slate-850: #1a1a1a;
+  --color-slate-800: #222222;
+
+  --color-emerald-400: #00ff41;
+  --color-emerald-500: #00ff41;
+  --color-emerald-600: #008f20;
+  --color-emerald-950: #050505;
+
+  --color-violet-400: #ff00ff;
+  --color-violet-500: #ff00ff;
+  --color-violet-600: #bf00bf;
+  --color-violet-950: #111111;
+
+  --color-fuchsia-400: #ff00ff;
+  --color-fuchsia-500: #ff00ff;
+  --color-fuchsia-600: #bf00bf;
+}
+
+/* Custom retro cyberpunk scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  border: 1px solid #ff00ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff00ff;
+  border: 1px solid #00ff41;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #050505;
+}
+
+body {
+  color: #00ff41;
+  background-color: #050505;
+  font-family: var(--font-sans);
+}
+
+/* Text selections are magenta highlighted */
+::selection {
+  background-color: rgba(255, 0, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Retro text effect with stroke and magenta shadow */
+.retro-header {
+  color: transparent !important;
+  -webkit-text-stroke: 1px #00ff41;
+  text-shadow: 2px 2px #ff00ff;
+  font-family: var(--font-mono);
+}
+
+.retro-header-magenta {
+  color: transparent !important;
+  -webkit-text-stroke: 1px #ff00ff;
+  text-shadow: 2px 2px #00ff41;
+  font-family: var(--font-mono);
+}
+
+/* Force sharp pixel/retro layout boundaries across the board */
+.rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-lg, .rounded-md, .rounded {
+  border-radius: 0px !important;
+}
+
+/* Force high-contrast 2px pixelated borders */
+.border, .border-2 {
+  border-width: 2px !important;
+}
+
+/* Animate the bottom marquee ticker infinitely */
+@keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-33.33%, 0, 0);
+  }
+}
+
+.ticker-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+
+.ticker-content {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+.ticker-content:hover {
+  animation-play-state: paused;
+}
+
+/* Decorative corner markers on retro panels */
+.retro-panel {
+  position: relative;
+  background-color: #111111 !important;
+  border: 2px solid #00ff41 !important;
+  border-radius: 0 !important;
+}
+
+.retro-panel::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 10px;
+  height: 10px;
+  border-top: 3px solid #ff00ff;
+  border-left: 3px solid #ff00ff;
+  pointer-events: none;
+}
+
+.retro-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 3px solid #ff00ff;
+  border-right: 3px solid #ff00ff;
+  pointer-events: none;
+}
+
+

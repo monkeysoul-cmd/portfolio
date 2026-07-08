@@ -1,0 +1,6 @@
+{
+  "name": "Ayush Bhati Arcade Portfolio",
+  "description": "An interactive arcade gem-themed portfolio website for Ayush Bhati, featuring gamified skills inventory, retro arcade projects cabinet, and quest log timeline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
