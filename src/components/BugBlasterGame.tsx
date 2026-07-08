@@ -371,6 +371,8 @@ export default function BugBlasterGame({
     bullets.current = [];
     particles.current = [];
     isAutoFiring.current = false;
+    const autofireBtn = document.getElementById('autofire-btn');
+    if (autofireBtn) autofireBtn.innerText = 'AUTOFIRE: OFF';
     setGameScore(0);
     setLevel(1);
     setShield(100);
@@ -827,19 +829,20 @@ export default function BugBlasterGame({
 
   return (
     <div 
-      className="bg-[#0b0c10] border-2 p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between transition-all duration-300 rounded-3xl" 
+      className={`bg-[#0b0c10] border-2 p-5 shadow-[0_0_30px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col justify-between transition-all duration-300 rounded-3xl ${shield <= 20 ? 'bb-critical-shake' : ''}`}
       id="retro-bug-blaster-arcade"
       style={{ borderColor: selectedProject ? currentCartridge.color : '#475569' }}
     >
-      {/* Visual CRT Scanline Grid Decal */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[length:15px_15px]" />
+      {/* Visual CRT Scanline Grid Decal & Moving Scanline */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[length:15px_15px] z-0" />
+      <div className="animate-scanline" />
 
       <div>
         {/* Component Header with Arcade Status LED */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 z-10 relative">
             <Target className="w-4 h-4 text-slate-400 animate-pulse" style={{ color: selectedProject ? currentCartridge.color : '#94a3b8' }} />
-            <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-200">
+            <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-200 bb-title-pulse" style={{ textShadow: selectedProject ? `0 0 8px ${currentCartridge.color}` : 'none' }}>
               {selectedProject ? `${currentCartridge.title.replace(' ', '_').toUpperCase()}_SYS` : 'ARCADE_EMULATOR.EXE'}
             </span>
           </div>
@@ -862,7 +865,7 @@ export default function BugBlasterGame({
                   onClose();
                 }
               }}
-              className="text-[10px] font-mono font-black px-3.5 py-1.5 rounded-lg border border-rose-500/30 bg-rose-950/20 text-rose-400 hover:bg-rose-900/30 hover:text-white hover:border-rose-500 hover:shadow-[0_0_12px_rgba(244,63,94,0.4)] transition-all cursor-pointer flex items-center gap-1.5 uppercase select-none active:scale-95"
+              className="text-[10px] font-mono font-black px-3.5 py-1.5 rounded-lg border border-rose-500/30 border-b-rose-900 bg-rose-950/20 text-rose-400 hover:bg-rose-900/30 hover:text-white hover:border-rose-500 hover:border-b-rose-800 transition-all cursor-pointer flex items-center gap-1.5 uppercase select-none retro-btn z-10 relative"
               title="Reset simulator back to BIOS Welcome stage"
             >
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
@@ -909,7 +912,7 @@ export default function BugBlasterGame({
                   setGameState('cartridge_select');
                   triggerSound('powerup');
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-black font-mono text-[10px] font-black uppercase tracking-widest rounded-xl border border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.4)] cursor-pointer hover:scale-105 active:scale-95 transition-all flex items-center gap-2 animate-bounce"
+                className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-mono text-[10px] font-black uppercase tracking-widest rounded-xl border border-emerald-400 border-b-emerald-800 cursor-pointer transition-all flex items-center gap-2 retro-btn retro-border-glow bb-btn-hover z-10 relative"
               >
                 <Play className="w-4 h-4 fill-black" />
                 START GAME
@@ -919,16 +922,23 @@ export default function BugBlasterGame({
 
           {/* Large Retro Play/Restart overlay for Gameover */}
           {gameState === 'gameover' && (
-            <div className="absolute inset-0 bg-black/60 flex items-center justify-center flex-col pt-20">
+            <div className="absolute inset-0 bg-black/80 flex items-center justify-center flex-col gap-4 pt-10 z-20">
+              <div className="text-rose-500 font-black font-mono text-xl tracking-widest uppercase bb-critical-shake drop-shadow-[0_0_10px_rgba(225,29,72,0.8)]">
+                SYSTEM CRASH
+              </div>
               <button
                 onClick={() => {
-                  setGameState('cartridge_select');
-                  triggerSound('coin');
+                  setGameState('welcome');
+                  setSelectedProject(null);
+                  setShield(100);
+                  setGameScore(0);
+                  setLevel(1);
+                  triggerSound('gem');
                 }}
-                className="px-5 py-2.5 bg-gradient-to-r from-rose-500 to-fuchsia-600 hover:from-rose-400 hover:to-fuchsia-500 text-white font-mono text-[10px] font-black uppercase tracking-widest rounded border shadow-xl cursor-pointer hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-mono text-[10px] font-black uppercase tracking-widest rounded border border-rose-500 border-b-rose-900 shadow-[0_0_20px_rgba(244,63,94,0.6)] cursor-pointer transition-all flex items-center gap-2 retro-btn bb-btn-hover z-10 relative"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                TRY ANOTHER SYSTEM DEPLOY
+                REBOOT CONSOLE
               </button>
             </div>
           )}
@@ -940,11 +950,12 @@ export default function BugBlasterGame({
                 onClick={() => {
                   startGame(selectedProject);
                 }}
-                className="px-5 py-2.5 bg-gradient-to-r text-black font-mono text-[9px] font-black uppercase tracking-wider rounded-lg border shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 animate-pulse"
+                className="flex items-center gap-1.5 px-4 py-1.5 bg-[#00ff41] text-black font-black font-mono text-[9px] tracking-widest border border-white hover:bg-white hover:text-black transition-all uppercase select-none retro-btn retro-border-glow bb-btn-hover z-10 relative"
                 style={{
-                  backgroundImage: `linear-gradient(to right, ${currentCartridge.color}, ${currentCartridge.accentColor})`,
-                  borderColor: currentCartridge.color,
-                  boxShadow: `0 0 15px ${currentCartridge.color}55`
+                  backgroundColor: currentCartridge.color,
+                  borderColor: currentCartridge.accentColor,
+                  borderBottomColor: '#000000',
+                  boxShadow: `0 0 15px ${currentCartridge.color}60`
                 }}
               >
                 <Cpu className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '3s' }} />
@@ -979,10 +990,10 @@ export default function BugBlasterGame({
                     triggerSound('coin');
                   }
                 }}
-                className={`relative flex flex-col justify-between p-2 rounded-xl border text-left cursor-pointer transition-all duration-300 select-none hover:scale-[1.03] active:scale-95 ${
+                className={`relative flex flex-col justify-between p-2 rounded-xl border text-left cursor-pointer transition-all duration-300 select-none retro-btn bb-btn-hover z-10 ${
                   selectedProject === cart.id
-                    ? `${cart.bgColor} border-[2px] shadow-lg ${cart.glowColor}`
-                    : 'bg-slate-900/30 border-slate-800 hover:border-slate-600 hover:bg-slate-900/60'
+                    ? `${cart.bgColor} border-2 border-b-black retro-border-glow`
+                    : 'bg-slate-900/30 border-slate-800 border-b-slate-950 hover:border-slate-600 hover:bg-slate-900/60'
                 }`}
                 style={{ borderColor: selectedProject === cart.id ? cart.color : undefined }}
               >
@@ -1051,8 +1062,8 @@ export default function BugBlasterGame({
             onMouseLeave={() => { keysPressed.current['arrowleft'] = false; }}
             onTouchStart={() => { keysPressed.current['arrowleft'] = true; }}
             onTouchEnd={() => { keysPressed.current['arrowleft'] = false; }}
-            className="w-11 h-8 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-mono font-black text-xs active:scale-90 transition-all rounded-lg cursor-pointer select-none flex items-center justify-center"
-            style={{ color: selectedProject ? currentCartridge.color : undefined }}
+            className="w-11 h-8 bg-slate-900 border border-slate-700 border-b-black hover:bg-slate-800 text-slate-300 font-mono font-black text-xs transition-all rounded-lg cursor-pointer select-none flex items-center justify-center retro-btn z-10 relative"
+            style={{ color: selectedProject ? currentCartridge.color : undefined, borderColor: selectedProject ? currentCartridge.color : undefined }}
           >
             ◀
           </button>
@@ -1062,8 +1073,8 @@ export default function BugBlasterGame({
             onMouseLeave={() => { keysPressed.current['arrowright'] = false; }}
             onTouchStart={() => { keysPressed.current['arrowright'] = true; }}
             onTouchEnd={() => { keysPressed.current['arrowright'] = false; }}
-            className="w-11 h-8 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-mono font-black text-xs active:scale-90 transition-all rounded-lg cursor-pointer select-none flex items-center justify-center"
-            style={{ color: selectedProject ? currentCartridge.color : undefined }}
+            className="w-11 h-8 bg-slate-900 border border-slate-700 border-b-black hover:bg-slate-800 text-slate-300 font-mono font-black text-xs transition-all rounded-lg cursor-pointer select-none flex items-center justify-center retro-btn z-10 relative"
+            style={{ color: selectedProject ? currentCartridge.color : undefined, borderColor: selectedProject ? currentCartridge.color : undefined }}
           >
             ▶
           </button>
@@ -1071,6 +1082,7 @@ export default function BugBlasterGame({
 
         {/* Master Fire Button */}
         <button
+          id="autofire-btn"
           onClick={(e) => {
             if (gameState === 'playing') {
               isAutoFiring.current = !isAutoFiring.current;
@@ -1078,7 +1090,7 @@ export default function BugBlasterGame({
             }
           }}
           disabled={gameState !== 'playing'}
-          className="px-6 h-8 text-black font-mono font-black text-[9px] tracking-widest uppercase transition-all rounded-lg border cursor-pointer select-none active:scale-95 disabled:bg-slate-950 disabled:text-slate-800 disabled:border-slate-900"
+          className="px-6 h-8 text-black font-mono font-black text-[9px] tracking-widest uppercase transition-all rounded-lg border border-b-black cursor-pointer select-none retro-btn disabled:bg-slate-950 disabled:text-slate-800 disabled:border-slate-900 z-10 relative"
           style={{
             backgroundColor: gameState === 'playing' ? currentCartridge.color : undefined,
             borderColor: gameState === 'playing' ? currentCartridge.accentColor : undefined,

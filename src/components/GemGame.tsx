@@ -90,11 +90,13 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
 
     const cols = 6;
     const rows = 4;
-    const brickW = 50;
+    const brickW = 46;
     const brickH = 14;
-    const padding = 8;
+    const padding = 6;
     const offsetTop = 40;
-    const offsetLeft = 24;
+    // Total width = 6 * 46 + 5 * 6 = 276 + 30 = 306
+    // Center offset = (340 - 306) / 2 = 17
+    const offsetLeft = 17;
 
     const skillsGrid = [
       ['C++', 'ALGOs', 'OOP', 'STL', 'POINTERS', 'MEM_MGMT'],
@@ -608,7 +610,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
           {/* Overlays (Start / Pause / Game Over) */}
           {!isPlaying && !gameOver && !gameWon && (
             <div className="absolute inset-0 bg-[#050505]/90 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center z-30 animate-fade-in">
-              <Sparkles className="w-10 h-10 text-[#00ff41] mb-3 animate-pulse" />
+              <Gamepad2 className="w-10 h-10 text-[#00ff41] mb-3 animate-pulse" />
               <h4 className="text-sm font-mono font-extrabold text-[#00ff41] uppercase tracking-widest mb-1.5">
                 ARCADE SKILL HARVESTER
               </h4>
