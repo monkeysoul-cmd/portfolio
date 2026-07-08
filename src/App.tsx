@@ -115,28 +115,32 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#00ff41] relative overflow-x-hidden font-mono selection:bg-[#ff00ff]/30">
+    <div 
+      className="min-h-screen bg-[#050505] text-[#00ff41] relative overflow-x-hidden font-mono selection:bg-[#ff00ff]/30"
+      style={{
+        backgroundImage: 'linear-gradient(rgba(0, 255, 65, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 65, 0.08) 1px, transparent 1px)',
+        backgroundSize: '40px 40px',
+        backgroundPosition: 'center center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       {/* Absolute Corner Borders for the viewport framing */}
       <div className="fixed top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
 
-      {/* Subtle CRT Overlay */}
+      {/* Subtle CRT Overlay & Vignette */}
       <div className="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.04),rgba(0,255,0,0.02),rgba(0,0,255,0.04))] bg-[length:100%_4px,4px_100%] opacity-40" />
-
-      {/* Retro Cyber grid decoration */}
-      <div className="absolute top-0 left-0 right-0 h-[500px] bg-[linear-gradient(to_bottom,rgba(5,5,5,0.85),rgba(5,5,5,1))] -z-20">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.03)_1px,transparent_1px)] bg-[length:35px_35px] opacity-40 [mask-image:radial-gradient(ellipse_at_top,rgba(0,0,0,1)_0%,transparent_75%)]" />
-      </div>
+      <div className="crt-vignette" />
 
       {/* Main Top Stat Bar / Navigation Header (Design Theme replica) */}
       <header className="max-w-6xl mx-auto px-4 pt-6 pb-4 flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-[#00ff41] mb-8 gap-4">
         <div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tighter uppercase italic retro-header select-none">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tighter uppercase italic retro-header select-none name-glitch-hover" data-text="AYUSH_BHATI.CMD">
             AYUSH_BHATI.CMD
           </h1>
-          <p className="text-xs mt-1 text-[#00ff41] opacity-80 uppercase font-bold">
+          <p className="text-xs mt-1 text-[#00ff41] opacity-80 uppercase font-bold animate-arcade-flicker">
             PLAYER PORTFOLIO // EMU_STATUS: ONLINE
           </p>
         </div>
@@ -145,7 +149,7 @@ export default function App() {
             <p className="text-[#ff00ff] font-bold">GITHUB CONNECTED</p>
             <p className="text-white font-mono">@MONKEYSOUL-CMD</p>
           </div>
-          <div className="bg-[#00ff41] text-black px-4 py-2 font-black italic tracking-widest animate-pulse select-none">
+          <div className="bg-[#00ff41] text-black px-4 py-2 font-black italic tracking-widest animate-arcade-score select-none">
             SCORE: {scorePoints}
           </div>
         </div>
@@ -171,7 +175,8 @@ export default function App() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl sm:text-7xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-4"
+          className="text-5xl sm:text-7xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-4 name-glitch-hover"
+          data-text="AYUSH BHATI"
         >
           AYUSH BHATI
         </motion.h2>
@@ -200,7 +205,7 @@ export default function App() {
             href="https://github.com/monkeysoul-cmd"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-pointer"
+            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
           >
             <Github className="w-4 h-4" />
             GITHUB PROFILE
@@ -210,7 +215,7 @@ export default function App() {
             href="https://linkedin.com"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-pointer"
+            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
           >
             <Linkedin className="w-4 h-4" />
             LINKEDIN
@@ -218,7 +223,7 @@ export default function App() {
 
           <a
             href="mailto:ayushrajput87917@gmail.com"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-pointer"
+            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
           >
             <Mail className="w-4 h-4" />
             EMAIL AYUSH
@@ -231,7 +236,7 @@ export default function App() {
               triggerSound('powerup');
               alert('Initiating download of Ayush Bhati Resume representation!');
             }}
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#ff00ff] hover:text-black text-[#ff00ff] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#ff00ff] transition-all cursor-pointer"
+            className="flex items-center gap-2 bg-[#111111] hover:bg-[#ff00ff] hover:text-black text-[#ff00ff] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#ff00ff] transition-all cursor-crosshair hover-glitch-text"
           >
             <FileText className="w-4 h-4" />
             DOWNLOAD RESUME
@@ -245,8 +250,8 @@ export default function App() {
           {/* Playable Game Cabinet Box */}
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-violet-400 font-bold bg-violet-950/40 px-2 py-0.5 rounded border border-violet-900/40">
+              <div className="flex items-center gap-2 group">
+                <span className="text-xs font-mono text-violet-400 font-bold bg-violet-950/40 px-2 py-0.5 rounded border border-violet-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(167,139,250,0.3)]">
                   STAGE_00
                 </span>
                 <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">
@@ -285,8 +290,8 @@ export default function App() {
 
         {/* Cartridge SELECT STAGE (Projects) Section */}
         <section className="space-y-6" id="projects">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900/40">
+          <div className="flex items-center gap-2 group">
+            <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(52,211,153,0.3)]">
               STAGE_01
             </span>
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">
@@ -299,8 +304,8 @@ export default function App() {
 
         {/* HERO BAG INVENTORY (Skills) Section */}
         <section className="space-y-6" id="skills">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-900/40">
+          <div className="flex items-center gap-2 group">
+            <span className="text-xs font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(96,165,250,0.3)]">
               STAGE_02
             </span>
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">
@@ -313,8 +318,8 @@ export default function App() {
 
         {/* QUEST CHRONOLOGY (Timeline) Section */}
         <section className="space-y-6" id="quests">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-amber-400 font-bold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-900/40">
+          <div className="flex items-center gap-2 group">
+            <span className="text-xs font-mono text-amber-400 font-bold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(251,191,36,0.3)]">
               STAGE_03
             </span>
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">
@@ -327,8 +332,8 @@ export default function App() {
 
         {/* TROPHY CABINET (Achievements) Section */}
         <section className="space-y-6" id="achievements">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-pink-400 font-bold bg-pink-950/40 px-2 py-0.5 rounded border border-pink-900/40">
+          <div className="flex items-center gap-2 group">
+            <span className="text-xs font-mono text-pink-400 font-bold bg-pink-950/40 px-2 py-0.5 rounded border border-pink-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(244,114,182,0.3)]">
               STAGE_04
             </span>
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">
@@ -341,8 +346,8 @@ export default function App() {
 
         {/* CHAT TRANSMISSION (Contact) Section */}
         <section className="space-y-6" id="contact">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-fuchsia-400 font-bold bg-fuchsia-950/40 px-2 py-0.5 rounded border border-fuchsia-900/40">
+          <div className="flex items-center gap-2 group">
+            <span className="text-xs font-mono text-fuchsia-400 font-bold bg-fuchsia-950/40 px-2 py-0.5 rounded border border-fuchsia-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(232,121,249,0.3)]">
               STAGE_05
             </span>
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-300">

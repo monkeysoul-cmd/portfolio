@@ -163,7 +163,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                       {/* Gem Body (Diamond rotating shape) */}
                       <div className="relative flex items-center justify-center w-12 h-12 mb-2">
                         <div
-                          className={`w-9 h-9 rotate-45 transition-transform group-hover:rotate-180 duration-500 absolute rounded-[2px] shadow-[0_0_12px_var(--tw-shadow-color)] ${colors.solid} ${colors.glow}`}
+                          className={`w-9 h-9 rotate-45 transition-transform group-hover:rotate-180 duration-500 absolute rounded-[2px] shadow-[0_0_12px_var(--tw-shadow-color)] ${colors.solid} ${colors.glow} float-pebble-${index % 4}`}
                         />
                         {/* Inner Shine */}
                         <div className="w-1.5 h-1.5 bg-white/60 rounded-full absolute -top-0.5 -left-0.5 pointer-events-none blur-[0.5px]" />
