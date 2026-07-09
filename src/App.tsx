@@ -170,11 +170,25 @@ export default function App() {
           RUNNER-UP • SMART INDIA HACKATHON 2025
         </motion.div>
 
+        {/* Animated Greeting */}
+        <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff41] mb-1">
+          {"Hii, i am".split('').map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, display: 'inline-block' }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.05, delay: 0.2 + index * 0.05 }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          ))}
+        </div>
+
         {/* Main Name Heading */}
         <motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="text-5xl sm:text-7xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-4 name-glitch-hover"
           data-text="AYUSH BHATI"
         >
