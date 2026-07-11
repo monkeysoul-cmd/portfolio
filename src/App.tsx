@@ -33,6 +33,7 @@ import Inventory from './components/Inventory';
 import QuestLog from './components/QuestLog';
 import AchievementsGrid from './components/AchievementsGrid';
 import ArcadeCabinet from './components/ArcadeCabinet';
+import ArcadeBackground from './components/ArcadeBackground';
 
 export default function App() {
   const [gemsCount, setGemsCount] = useState(3); // Start with 3 standard unlocked gems
@@ -124,6 +125,7 @@ export default function App() {
         backgroundAttachment: 'fixed'
       }}
     >
+      <ArcadeBackground />
       {/* Absolute Corner Borders for the viewport framing */}
       <div className="fixed top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
