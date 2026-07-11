@@ -33,6 +33,7 @@ import Inventory from './components/Inventory';
 import QuestLog from './components/QuestLog';
 import AchievementsGrid from './components/AchievementsGrid';
 import ArcadeCabinet from './components/ArcadeCabinet';
+import ArcadeBackground from './components/ArcadeBackground';
 
 export default function App() {
   const [gemsCount, setGemsCount] = useState(3); // Start with 3 standard unlocked gems
@@ -124,6 +125,7 @@ export default function App() {
         backgroundAttachment: 'fixed'
       }}
     >
+      <ArcadeBackground />
       {/* Absolute Corner Borders for the viewport framing */}
       <div className="fixed top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
@@ -170,11 +172,25 @@ export default function App() {
           RUNNER-UP • SMART INDIA HACKATHON 2025
         </motion.div>
 
+        {/* Animated Greeting */}
+        <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff41] mb-1">
+          {"Hii, i am".split('').map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, display: 'inline-block' }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.05, delay: 0.2 + index * 0.05 }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          ))}
+        </div>
+
         {/* Main Name Heading */}
         <motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="text-5xl sm:text-7xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-4 name-glitch-hover"
           data-text="AYUSH BHATI"
         >
