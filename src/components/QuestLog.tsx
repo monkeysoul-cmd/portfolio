@@ -48,13 +48,13 @@ export default function QuestLog() {
                 : 'border-slate-800/80 hover:border-slate-700/80'
             }`}
           >
-            {/* Header / Click Trigger */}
+            
             <div
               onClick={() => setActiveQuest(isExpanded ? null : quest.id)}
               className="p-5 flex items-center justify-between cursor-pointer select-none gap-4"
             >
               <div className="flex items-center gap-4">
-                {/* Level Tag */}
+                
                 <div className="text-center shrink-0">
                   <span className="text-[9px] font-mono text-slate-500 block uppercase">STAGE</span>
                   <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-sm font-mono font-extrabold text-violet-400 shadow-inner">
@@ -81,7 +81,7 @@ export default function QuestLog() {
               </div>
 
               <div className="flex items-center gap-3">
-                {/* Status Indicator */}
+                
                 <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] rounded-lg">
                   <CheckCircle className="w-3.5 h-3.5" />
                   COMPLETED
@@ -95,7 +95,7 @@ export default function QuestLog() {
               </div>
             </div>
 
-            {/* Expanded Quest Body */}
+            
             <AnimatePresence initial={false}>
               {isExpanded && (
                 <motion.div
@@ -105,7 +105,7 @@ export default function QuestLog() {
                   transition={{ duration: 0.25 }}
                 >
                   <div className="px-5 pb-5 pt-1 border-t border-slate-900/60 grid grid-cols-1 md:grid-cols-12 gap-5 bg-slate-950/40">
-                    {/* Objectives list */}
+                    
                     <div className="md:col-span-8 space-y-3.5">
                       <label className="text-[10px] font-mono text-slate-400 block tracking-wider uppercase">
                         CAMPAIGN OBJECTIVES ACHIEVED
@@ -120,7 +120,7 @@ export default function QuestLog() {
                       </ul>
                     </div>
 
-                    {/* Stage rewards box */}
+                    
                     <div className="md:col-span-4 bg-slate-900/40 border border-slate-850 rounded-xl p-4 flex flex-col justify-between">
                       <div>
                         <div className="flex items-center gap-1.5 mb-2">

@@ -63,7 +63,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
   });
   const [isPaused, setIsPaused] = useState(false);
 
-  // References for game loop animation
+  
   const animationFrameIdRef = useRef<number | null>(null);
   const gameStateRef = useRef({
     score: 0,
@@ -83,7 +83,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
 
   const mouseRef = useRef({ x: 160 });
 
-  // Init game board bricks mapped directly to Ayush's skills
+  
   const initGame = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -94,8 +94,8 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     const brickH = 14;
     const padding = 6;
     const offsetTop = 40;
-    // Total width = 6 * 46 + 5 * 6 = 276 + 30 = 306
-    // Center offset = (340 - 306) / 2 = 17
+    
+    
     const offsetLeft = 17;
 
     const skillsGrid = [
@@ -107,10 +107,10 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
 
     const gemTypes: ('ruby' | 'emerald' | 'sapphire' | 'amethyst')[] = ['ruby', 'emerald', 'sapphire', 'amethyst'];
     const gemColors = {
-      ruby: '#ff2a5f',       // C++ / Algorithms - Intense Red
-      emerald: '#00ff41',    // React / Web Dev - Retro Cyber Green
-      sapphire: '#00e5ff',   // Backend / DB - Electric Cyan
-      amethyst: '#ff00ff',   // Visuals / Audio - Vibrant Neon Magenta
+      ruby: '#ff2a5f',       
+      emerald: '#00ff41',    
+      sapphire: '#00e5ff',   
+      amethyst: '#ff00ff',   
     };
 
     const bricks: Brick[] = [];
@@ -139,8 +139,8 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       paddleH: 10,
       ballX: canvas.width / 2,
       ballY: canvas.height - 45,
-      ballVX: (Math.random() * 2 - 1) * 2 || 2, // Fast launch horizontal speed
-      ballVY: -4.5, // High speed vertical launching
+      ballVX: (Math.random() * 2 - 1) * 2 || 2, 
+      ballVY: -4.5, 
       ballRadius: 6,
       bricks,
       fallingGems: [],
@@ -158,7 +158,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     const state = gameStateRef.current;
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 6 + 2.5; // High velocity particles
+      const speed = Math.random() * 6 + 2.5; 
       state.particles.push({
         x,
         y,
@@ -167,7 +167,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
         color,
         size: Math.random() * 3 + 1,
         life: 0,
-        maxLife: Math.random() * 12 + 8, // Quicker fading
+        maxLife: Math.random() * 12 + 8, 
       });
     }
   };
@@ -179,7 +179,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       y,
       text,
       color,
-      vy: -2.2, // Drifts upward rapidly
+      vy: -2.2, 
       life: 0,
       maxLife: 25,
     });
@@ -194,12 +194,12 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       amethyst: '#ff00ff',
     };
     
-    // 50% chance to drop coin instead of specific gem
+    
     const isCoin = Math.random() > 0.6;
     state.fallingGems.push({
       x,
       y,
-      vy: 3.5, // Faster falling velocity
+      vy: 3.5, 
       size: 11,
       color: isCoin ? '#fbbf24' : colors[gemType],
       gemType: isCoin ? 'coin' : gemType,
@@ -207,28 +207,28 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     });
   };
 
-  // Main tick update
+  
   const updateGame = () => {
     const canvas = canvasRef.current;
     if (!canvas || isPaused) return;
 
     const state = gameStateRef.current;
 
-    // 1. Move Paddle smoothly to mouse pointer position
+    
     const targetX = mouseRef.current.x - state.paddleW / 2;
-    state.paddleX += (targetX - state.paddleX) * 0.45; // Enhanced instant response tracking
+    state.paddleX += (targetX - state.paddleX) * 0.45; 
 
-    // Constrain paddle
+    
     if (state.paddleX < 0) state.paddleX = 0;
     if (state.paddleX + state.paddleW > canvas.width) {
       state.paddleX = canvas.width - state.paddleW;
     }
 
-    // 2. Move Ball
+    
     state.ballX += state.ballVX;
     state.ballY += state.ballVY;
 
-    // Bounce Ball off left/right walls
+    
     if (state.ballX - state.ballRadius < 0) {
       state.ballX = state.ballRadius;
       state.ballVX = -state.ballVX;
@@ -239,43 +239,43 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       onSoundTrigger('laser');
     }
 
-    // Bounce Ball off ceiling
+    
     if (state.ballY - state.ballRadius < 0) {
       state.ballY = state.ballRadius;
       state.ballVY = -state.ballVY;
       onSoundTrigger('laser');
     }
 
-    // Ball falls out of bounds (Game Over)
+    
     if (state.ballY + state.ballRadius > canvas.height) {
       setIsPlaying(false);
       setGameOver(true);
       return;
     }
 
-    // 3. Bounce Ball off Paddle
+    
     if (
       state.ballY + state.ballRadius >= canvas.height - 25 &&
       state.ballY - state.ballRadius <= canvas.height - 15 &&
       state.ballX >= state.paddleX &&
       state.ballX <= state.paddleX + state.paddleW
     ) {
-      // Direct ball angle based on where it hit on the paddle
+      
       const relativeHit = (state.ballX - (state.paddleX + state.paddleW / 2)) / (state.paddleW / 2);
-      state.ballVX = relativeHit * 4.0; // Wider, more aggressive angles
+      state.ballVX = relativeHit * 4.0; 
       state.ballVY = -Math.abs(state.ballVY);
-      state.ballY = canvas.height - 25 - state.ballRadius; // Reposition
+      state.ballY = canvas.height - 25 - state.ballRadius; 
       onSoundTrigger('laser');
       spawnParticles(state.ballX, state.ballY, '#ff00ff', 8);
     }
 
-    // 4. Ball & Brick Collision
+    
     let remainingBricks = 0;
     state.bricks.forEach((brick) => {
       if (!brick.intact) return;
       remainingBricks++;
 
-      // AABB overlap check for circle and box
+      
       const closestX = Math.max(brick.x, Math.min(state.ballX, brick.x + brick.w));
       const closestY = Math.max(brick.y, Math.min(state.ballY, brick.y + brick.h));
       
@@ -284,45 +284,45 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       const distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
       if (distanceSquared < state.ballRadius * state.ballRadius) {
-        // Collision!
+        
         brick.intact = false;
         onSoundTrigger('gem');
         
-        // Spawn debris particles and floating text label
+        
         spawnParticles(brick.x + brick.w / 2, brick.y + brick.h / 2, brick.color, 15);
         spawnFloatingText(brick.x + brick.w / 2, brick.y + brick.h / 2, `+ ${brick.skillLabel}`, brick.color);
         
-        // Add score with specific skill shattered announcement!
+        
         state.score += brick.points;
         setScore(state.score);
         onScorePoints(brick.points, `SHATTERED ${brick.skillLabel} BLOCK!`);
 
-        // Gem / Coin drop (85% chance for high velocity excitement)
+        
         if (Math.random() < 0.85) {
           spawnFallingGem(brick.x + brick.w / 2, brick.y + brick.h, brick.gemType);
         }
 
-        // Simple reflection math
+        
         if (Math.abs(distanceX) > Math.abs(distanceY)) {
           state.ballVX = -state.ballVX;
         } else {
           state.ballVY = -state.ballVY;
         }
 
-        // Speed boost up to limit for thriller experience!
+        
         const speedMultiplier = 1.01;
         if (Math.abs(state.ballVX) < 6) state.ballVX *= speedMultiplier;
         if (Math.abs(state.ballVY) < 6) state.ballVY *= speedMultiplier;
       }
     });
 
-    // Check Win
+    
     if (remainingBricks === 0 && state.bricks.length > 0) {
       setIsPlaying(false);
       setGameWon(true);
       onSoundTrigger('powerup');
       
-      // Update High Score
+      
       if (state.score > highScore) {
         setHighScore(state.score);
         localStorage.setItem('arcade_gem_highscore', state.score.toString());
@@ -330,33 +330,33 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       return;
     }
 
-    // 5. Update Falling Gems
+    
     state.fallingGems.forEach((gem, idx) => {
       gem.y += gem.vy;
 
-      // Check catching with paddle
+      
       if (
         gem.y + gem.size >= canvas.height - 25 &&
         gem.y - gem.size <= canvas.height - 15 &&
         gem.x >= state.paddleX &&
         gem.x <= state.paddleX + state.paddleW
       ) {
-        // Caught!
+        
         state.score += gem.points;
         setScore(state.score);
         onScorePoints(gem.points, gem.gemType === 'coin' ? 'CAPTURED BONUS GOLD!' : `CAPTURED ${gem.gemType.toUpperCase()} SKILL GEM!`);
         onSoundTrigger('coin');
         
-        // Catch sparks
+        
         spawnParticles(gem.x, gem.y, gem.color, 15);
         state.fallingGems.splice(idx, 1);
       } else if (gem.y > canvas.height) {
-        // Out of screen
+        
         state.fallingGems.splice(idx, 1);
       }
     });
 
-    // 6. Update Particles
+    
     state.particles.forEach((p, idx) => {
       p.x += p.vx;
       p.y += p.vy;
@@ -366,7 +366,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       }
     });
 
-    // 7. Update Floating Texts
+    
     state.floatingTexts.forEach((ft, idx) => {
       ft.y += ft.vy;
       ft.life++;
@@ -376,7 +376,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     });
   };
 
-  // Draw board onto Canvas
+  
   const drawGame = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -384,11 +384,11 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
 
     const state = gameStateRef.current;
 
-    // Clear board - Editorial Deep Black
+    
     ctx.fillStyle = '#050505';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Retro grid scan lines
+    
     ctx.strokeStyle = '#151515';
     ctx.lineWidth = 1;
     const gridSize = 20;
@@ -405,26 +405,26 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       ctx.stroke();
     }
 
-    // Render intact bricks with skill labels
+    
     state.bricks.forEach((brick) => {
       if (!brick.intact) return;
 
-      // Draw sharp brick block
+      
       ctx.fillStyle = brick.color;
       ctx.beginPath();
       ctx.rect(brick.x, brick.y, brick.w, brick.h);
       ctx.fill();
 
-      // Sharp editorial border
+      
       ctx.strokeStyle = '#050505';
       ctx.lineWidth = 1.5;
       ctx.strokeRect(brick.x, brick.y, brick.w, brick.h);
 
-      // Subtle top lighting line
+      
       ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       ctx.fillRect(brick.x + 1, brick.y + 1, brick.w - 2, 2.2);
 
-      // Draw skill label text inside brick
+      
       ctx.fillStyle = '#ffffff';
       ctx.font = '800 7px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
@@ -432,22 +432,22 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       ctx.fillText(brick.skillLabel, brick.x + brick.w / 2, brick.y + brick.h / 2 + 0.5);
     });
 
-    // Draw Paddle - Retro Green and Magenta Theme
+    
     ctx.fillStyle = '#00ff41'; 
     ctx.shadowColor = '#00ff41';
     ctx.shadowBlur = 12;
     ctx.beginPath();
     ctx.rect(state.paddleX, canvas.height - 25, state.paddleW, state.paddleH);
     ctx.fill();
-    ctx.shadowBlur = 0; // reset glow
+    ctx.shadowBlur = 0; 
 
-    // Draw paddle dual interior design (retro aesthetic)
+    
     ctx.fillStyle = '#ff00ff';
     ctx.fillRect(state.paddleX + 4, canvas.height - 23, state.paddleW - 8, 2);
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(state.paddleX + 16, canvas.height - 23, state.paddleW - 32, 2);
 
-    // Draw Ball
+    
     ctx.fillStyle = '#ffffff';
     ctx.shadowColor = '#00ff41';
     ctx.shadowBlur = 8;
@@ -456,7 +456,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Draw Falling Gems / Coins
+    
     state.fallingGems.forEach((gem) => {
       ctx.fillStyle = gem.color;
       ctx.shadowColor = gem.color;
@@ -464,14 +464,14 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       
       ctx.beginPath();
       if (gem.gemType === 'coin') {
-        // Draw round gold coin
+        
         ctx.arc(gem.x, gem.y, gem.size / 2, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = '#fef08a'; // gold detail
+        ctx.fillStyle = '#fef08a'; 
         ctx.arc(gem.x, gem.y, gem.size / 4.5, 0, Math.PI * 2);
         ctx.fill();
       } else {
-        // Draw diamond shape
+        
         ctx.moveTo(gem.x, gem.y - gem.size / 1.8);
         ctx.lineTo(gem.x + gem.size / 1.8, gem.y);
         ctx.lineTo(gem.x, gem.y + gem.size / 1.8);
@@ -482,24 +482,24 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       ctx.shadowBlur = 0;
     });
 
-    // Draw Debris Particles
+    
     state.particles.forEach((p) => {
       ctx.fillStyle = p.color;
       ctx.globalAlpha = Math.max(0, 1 - p.life / p.maxLife);
       ctx.beginPath();
-      ctx.rect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); // square retro debris!
+      ctx.rect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); 
       ctx.fill();
     });
     ctx.globalAlpha = 1.0;
 
-    // Draw Floating Text Labels (Skills floating upwards!)
+    
     state.floatingTexts.forEach((ft) => {
       ctx.fillStyle = ft.color;
       ctx.font = '800 9px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.globalAlpha = Math.max(0, 1 - ft.life / ft.maxLife);
       
-      // Draw background stroke for maximum text legibility
+      
       ctx.strokeStyle = '#000000';
       ctx.lineWidth = 2.5;
       ctx.strokeText(ft.text, ft.x, ft.y);
@@ -508,7 +508,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     ctx.globalAlpha = 1.0;
   };
 
-  // Run cycle
+  
   useEffect(() => {
     const loop = () => {
       if (isPlaying && !isPaused) {
@@ -531,7 +531,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     };
   }, [isPlaying, isPaused]);
 
-  // Handle Resize and Mouse moves
+  
   useEffect(() => {
     initGame();
 
@@ -573,18 +573,18 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
 
   return (
     <div className="bg-[#111111] border-2 border-[#00ff41] p-6 shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-6 items-center" id="arcade-cabinet">
-      {/* Decorative Corner Markers */}
+      
       <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#00ff41]"></div>
       <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#00ff41]"></div>
       <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#00ff41]"></div>
       <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#00ff41]"></div>
 
-      {/* Subtle CRT Scanline Overlay */}
+      
       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,4px_100%] z-10" />
 
-      {/* Screen Box */}
+      
       <div className="flex-1 w-full max-w-[360px] aspect-[4/5] bg-[#050505] border-2 border-[#00ff41]/60 relative overflow-hidden flex flex-col justify-between">
-        {/* Game Header */}
+        
         <div className="bg-[#111111] px-4 py-2 flex items-center justify-between border-b border-[#00ff41]/30 z-20">
           <div className="flex items-center gap-1.5">
             <Gamepad2 className="w-4 h-4 text-[#ff00ff] animate-bounce" />
@@ -598,7 +598,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
           </div>
         </div>
 
-        {/* The Interactive Canvas */}
+        
         <div className="relative flex-1 w-full flex items-center justify-center bg-[#050505]">
           <canvas
             ref={canvasRef}
@@ -607,7 +607,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
             className="w-full h-full block max-w-full cursor-crosshair"
           />
 
-          {/* Overlays (Start / Pause / Game Over) */}
+          
           {!isPlaying && !gameOver && !gameWon && (
             <div className="absolute inset-0 bg-[#050505]/90 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center z-30 animate-fade-in">
               <Gamepad2 className="w-10 h-10 text-[#00ff41] mb-3 animate-pulse" />
@@ -673,7 +673,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
           )}
         </div>
 
-        {/* Touch / Slide Guidance */}
+        
         {isPlaying && (
           <div className="bg-[#111111] py-1.5 border-t border-[#00ff41]/20 text-center z-20">
             <span className="text-[9px] font-mono text-[#00ff41]/80 uppercase tracking-widest">
@@ -683,7 +683,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
         )}
       </div>
 
-      {/* Control Panel / Stats Deck */}
+      
       <div className="w-full md:w-56 flex flex-col justify-between self-stretch py-2">
         <div>
           <h3 className="text-base font-extrabold text-[#00ff41] uppercase tracking-wider mb-1 flex items-center gap-1.5 italic">

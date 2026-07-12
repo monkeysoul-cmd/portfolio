@@ -10,7 +10,7 @@ function TrafficSimulation() {
   const [timer, setTimer] = useState(30);
   const [pulse, setPulse] = useState(true);
 
-  // Animate the mini traffic light controller timer and light state
+  
   useEffect(() => {
     const lightInterval = setInterval(() => {
       setTimer((prev) => {
@@ -26,16 +26,16 @@ function TrafficSimulation() {
       });
     }, 1000);
 
-    // Speed indicator / heartbeat animation
+    
     const pulseInterval = setInterval(() => {
       setPulse((p) => !p);
     }, 800);
 
-    // Spawn and move cars inside the tiny 'Camera views & Analysis' feed
+    
     const carInterval = setInterval(() => {
       setCars((prevCars) => {
         let nextCars = [...prevCars];
-        // Randomly spawn a car at the top of one of three lanes
+        
         if (nextCars.length < 6 && Math.random() < 0.25) {
           nextCars.push({
             id: Date.now() + Math.random(),
@@ -48,7 +48,7 @@ function TrafficSimulation() {
 
         return nextCars
           .map((car) => {
-            // Apply speed reduction if red light is active and car is in middle section
+            
             let currentSpeed = car.speed;
             if (lightState === 'RED' && car.y > 15 && car.y < 35) {
               currentSpeed = car.speed * 0.15;
@@ -71,19 +71,19 @@ function TrafficSimulation() {
 
   return (
     <div className="relative w-full h-full bg-[#030306] overflow-hidden font-mono flex select-none text-slate-300">
-      {/* Simulation grid overlay */}
+      
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(rgba(0,255,65,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.02)_1px,transparent_1px)] bg-[length:6px_6px]" />
 
-      {/* --- SIDEBAR RAIL --- */}
+      
       <div className="w-[50px] border-r border-slate-900 bg-black/60 flex flex-col justify-between py-2 items-center text-[5px] font-bold shrink-0">
         <div className="w-full flex flex-col items-center gap-2.5">
-          {/* Logo */}
+          
           <div className="flex flex-col items-center">
             <span className="text-[6.5px] font-black text-emerald-400 tracking-tighter">TRAFFIC</span>
             <span className="text-[4px] text-slate-500 leading-none">FLOW</span>
           </div>
 
-          {/* Menus */}
+          
           <div className="w-full flex flex-col gap-1 px-1">
             <div className="flex items-center gap-1 py-1 px-1 rounded bg-emerald-950/40 border border-emerald-900/40 text-emerald-400">
               <span className="w-1 h-1 rounded-full bg-emerald-400" />
@@ -104,7 +104,7 @@ function TrafficSimulation() {
           </div>
         </div>
 
-        {/* Sidebar bottom */}
+        
         <div className="w-full px-1 flex flex-col gap-1">
           <div className="flex items-center gap-1 py-0.5 px-1 text-slate-500">
             <span className="scale-75 origin-left">PROFILE</span>
@@ -115,9 +115,9 @@ function TrafficSimulation() {
         </div>
       </div>
 
-      {/* --- MAIN DASHBOARD SECTION --- */}
+      
       <div className="flex-1 flex flex-col p-2 gap-1.5 overflow-hidden">
-        {/* Top Mini Header */}
+        
         <div className="flex justify-between items-center bg-black/40 border border-slate-900 px-1.5 py-0.5 rounded text-[5px] text-slate-400 font-bold">
           <div className="flex items-center gap-1">
             <span className="w-1 h-1 rounded-full bg-emerald-500 animate-ping" />
@@ -126,9 +126,9 @@ function TrafficSimulation() {
           <span>USER: bitfusion-l</span>
         </div>
 
-        {/* --- FOUR TOP METRICS CARDS --- */}
+        
         <div className="grid grid-cols-4 gap-1">
-          {/* Card 1 */}
+          
           <div className="bg-slate-950/80 border border-emerald-950 p-1 rounded flex flex-col justify-between">
             <span className="text-[4px] text-slate-500 leading-none">TOTAL VEHICLES</span>
             <div className="flex justify-between items-end mt-0.5">
@@ -136,7 +136,7 @@ function TrafficSimulation() {
               <span className="text-[3.5px] text-emerald-500/60 font-bold">▲ 12%</span>
             </div>
           </div>
-          {/* Card 2 */}
+          
           <div className="bg-slate-950/80 border border-slate-900 p-1 rounded flex flex-col justify-between">
             <span className="text-[4px] text-slate-500 leading-none">AVERAGE SPEED</span>
             <div className="flex justify-between items-end mt-0.5">
@@ -144,7 +144,7 @@ function TrafficSimulation() {
               <span className="text-[3.5px] text-slate-600 font-bold">--</span>
             </div>
           </div>
-          {/* Card 3 */}
+          
           <div className="bg-slate-950/80 border border-slate-900 p-1 rounded flex flex-col justify-between">
             <span className="text-[4px] text-slate-500 leading-none">TRAFFIC LEVEL</span>
             <div className="flex justify-between items-end mt-0.5">
@@ -152,7 +152,7 @@ function TrafficSimulation() {
               <span className="text-[3.5px] text-amber-500/60 font-bold">WARN</span>
             </div>
           </div>
-          {/* Card 4 */}
+          
           <div className="bg-slate-950/80 border border-rose-950 p-1 rounded flex flex-col justify-between">
             <span className="text-[4px] text-slate-500 leading-none">ACTIVE ALERTS</span>
             <div className="flex justify-between items-end mt-0.5">
@@ -162,22 +162,22 @@ function TrafficSimulation() {
           </div>
         </div>
 
-        {/* --- LOWER TWO-COLUMN AREA --- */}
+        
         <div className="flex-1 grid grid-cols-12 gap-1.5 overflow-hidden">
-          {/* Left Column: Camera Views (Active Simulated Highway) */}
+          
           <div className="col-span-7 bg-black/60 border border-slate-900 rounded p-1 flex flex-col overflow-hidden justify-between">
             <div className="flex justify-between items-center text-[5px] font-black text-slate-400 border-b border-slate-900 pb-0.5 mb-1">
               <span>📷 CAMERA FEED: HWY_3A</span>
               <span className="text-emerald-500 animate-pulse">[RECORDING]</span>
             </div>
 
-            {/* Simulated moving perspective road */}
+            
             <div className="flex-1 bg-[#020204] border border-slate-950 rounded relative overflow-hidden flex items-center justify-center">
-              {/* Road markings */}
+              
               <div className="absolute top-0 bottom-0 left-1/3 border-r border-dashed border-slate-800 w-0 z-0" />
               <div className="absolute top-0 bottom-0 left-2/3 border-r border-dashed border-slate-800 w-0 z-0" />
 
-              {/* Active simulated cars in lane */}
+              
               {cars.map((car) => (
                 <div
                   key={car.id}
@@ -189,32 +189,32 @@ function TrafficSimulation() {
                     boxShadow: `0 0 4px ${car.color}60`,
                   }}
                 >
-                  {/* Miniature car windsheild reflection */}
+                  
                   <div className="w-1.5 h-1 bg-black/40 rounded-sm mx-auto" />
                 </div>
               ))}
 
-              {/* Distant horizon effect / lighting lines */}
+              
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-b from-slate-950 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-slate-950 to-transparent" />
 
-              {/* Feed watermark */}
+              
               <span className="absolute bottom-1 left-1.5 text-[4px] text-emerald-500/60 font-mono font-black tracking-widest bg-black/60 px-1 py-0.5 rounded">
                 CAM_REC_LIVE_09_1
               </span>
             </div>
           </div>
 
-          {/* Right Column: Signal Controls & Incidents */}
+          
           <div className="col-span-5 flex flex-col gap-1.5 overflow-hidden">
-            {/* Live Traffic Light Control Box */}
+            
             <div className="bg-black/60 border border-slate-900 rounded p-1 flex flex-col justify-between">
               <div className="flex justify-between items-center text-[4.5px] font-black text-slate-400 border-b border-slate-900 pb-0.5 mb-1.5">
                 <span>🚦 SIGNAL CONTROL</span>
                 <span className="bg-emerald-950 text-emerald-400 px-1 py-0.2 rounded scale-90 origin-right">PILOT_ON</span>
               </div>
 
-              {/* Micro lanes and bulbs */}
+              
               <div className="space-y-1 text-[4px] font-bold">
                 <div className="flex justify-between items-center bg-slate-950/40 p-0.5 rounded border border-slate-900">
                   <span className="text-slate-400 scale-95 origin-left">MG ROAD: LN_1</span>
@@ -234,14 +234,14 @@ function TrafficSimulation() {
                 </div>
               </div>
 
-              {/* Signal Status line */}
+              
               <div className="flex justify-between items-center mt-1.5 text-[4.5px] font-black">
                 <span className="text-emerald-400">STATE: {lightState}</span>
                 <span className="text-slate-500">T-MINUS: {timer}s</span>
               </div>
             </div>
 
-            {/* Recent Incidents Box */}
+            
             <div className="flex-1 bg-black/60 border border-slate-900 rounded p-1 flex flex-col justify-between overflow-hidden">
               <span className="text-[4.5px] font-black text-slate-400 border-b border-slate-900 pb-0.5 mb-1 uppercase">
                 ⚠️ RECENT INCIDENTS
@@ -298,7 +298,7 @@ function HealthSimulation() {
 
   return (
     <div className="relative w-full h-full bg-[#030611] overflow-hidden font-sans flex select-none text-slate-300 p-2">
-      {/* Background cross grid pattern */}
+      
       <div className="absolute inset-0 grid grid-cols-12 grid-rows-8 gap-2 p-1.5 opacity-15 pointer-events-none select-none text-[5px] text-emerald-500/40">
         {Array.from({ length: 96 }).map((_, i) => (
           <span key={i} className="text-center font-extralight">+</span>
@@ -306,9 +306,9 @@ function HealthSimulation() {
       </div>
 
       <div className="relative z-10 w-full h-full flex flex-col gap-1.5 justify-between">
-        {/* TOP HERO PORTION */}
+        
         <div className="flex flex-col items-center justify-center gap-0.5 mt-0.5">
-          {/* Glowing heartbeat box */}
+          
           <div className="w-5 h-5 rounded-md bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_8px_rgba(16,185,129,0.15)]">
             <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" strokeLinecap="round" strokeLinejoin="round" />
@@ -323,9 +323,9 @@ function HealthSimulation() {
           </p>
         </div>
 
-        {/* MIDDLE SECTION - TWO PANELS */}
+        
         <div className="flex-1 grid grid-cols-12 gap-1.5 my-1 overflow-hidden">
-          {/* Left panel: Symptom Checker */}
+          
           <div className="col-span-7 bg-black/40 border border-slate-900 rounded p-1 flex flex-col justify-between overflow-hidden">
             <div className="flex items-center gap-1 text-[4.5px] text-emerald-400 font-extrabold border-b border-slate-900/60 pb-0.5 mb-1 shrink-0">
               <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
@@ -355,9 +355,9 @@ function HealthSimulation() {
             </div>
           </div>
 
-          {/* Right panel: Doctor Sneha Reddy assistant */}
+          
           <div className="col-span-5 bg-black/40 border border-slate-900 rounded p-1 flex flex-col justify-between overflow-hidden">
-            {/* Header: Status */}
+            
             <div className="flex justify-between items-center text-[4px] font-extrabold border-b border-slate-900/60 pb-0.5 shrink-0">
               <div className="flex items-center gap-0.5 text-emerald-400">
                 <span className="w-1 h-1 rounded-full bg-emerald-400" />
@@ -366,7 +366,7 @@ function HealthSimulation() {
               <span className="text-[3.5px] text-slate-500 bg-slate-950 px-0.5 rounded">GP_CONSULT</span>
             </div>
 
-            {/* Chat output */}
+            
             <div className="flex-1 flex flex-col justify-center py-1">
               <div className="bg-slate-950/80 border border-slate-900 rounded p-1 text-[3.5px] leading-tight text-slate-300 relative min-h-[22px] flex items-center">
                 <p className="font-medium tracking-wide">
@@ -376,7 +376,7 @@ function HealthSimulation() {
               </div>
             </div>
 
-            {/* Micro avatar at bottom center */}
+            
             <div className="flex justify-between items-center shrink-0 border-t border-slate-900/40 pt-0.5 mt-0.5">
               <span className="text-[3.5px] font-black text-indigo-400">AI ASSESSMENT</span>
               <div className="relative w-3.5 h-3.5 rounded-full bg-emerald-950/60 border border-emerald-500/40 flex items-center justify-center overflow-hidden">
@@ -390,7 +390,7 @@ function HealthSimulation() {
           </div>
         </div>
 
-        {/* FOOTER METRICS BAR */}
+        
         <div className="flex justify-between items-center text-[4px] font-black text-slate-500 border-t border-slate-900/40 pt-0.5">
           <span>🔬 ENGINE: CLINICAL_GPT_v1</span>
           <span className="text-emerald-500">ACCURACY: 99.4%</span>
@@ -449,11 +449,11 @@ export default function ArcadeCabinet() {
 
   return (
     <div className="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 lg:p-8 relative overflow-hidden" id="projects-selector">
-      {/* Absolute Decorative Background Elements */}
+      
       <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/5 rounded-full blur-3xl -z-10 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-600/5 rounded-full blur-3xl -z-10 pointer-events-none" />
 
-      {/* Retro Arcade Machine Frame Header */}
+      
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 border-b border-slate-900 pb-5">
         <div>
           <h3 className="text-lg font-bold font-sans text-slate-100 flex items-center gap-2">
@@ -465,7 +465,7 @@ export default function ArcadeCabinet() {
           </p>
         </div>
 
-        {/* Carousel Cartridge Selector Indicator */}
+        
         <div className="flex items-center gap-3">
           <button
             onClick={handlePrev}
@@ -489,7 +489,7 @@ export default function ArcadeCabinet() {
         </div>
       </div>
 
-      {/* Main Project Card Carousel Frame with Motion transitions */}
+      
       <AnimatePresence mode="wait">
         <motion.div
           key={activeProject.id}
@@ -499,28 +499,28 @@ export default function ArcadeCabinet() {
           transition={{ duration: 0.3 }}
           className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border rounded-2xl p-6 lg:p-8 bg-gradient-to-br ${getGemBgGradient(activeProject.gemType)} shadow-[0_0_20px_rgba(0,0,0,0.4)]`}
         >
-          {/* Left Column: Visual Game Cartridge and Metrics */}
+          
           <div className="lg:col-span-5 flex flex-col justify-between gap-6">
-            {/* Retro Arcade CRT Monitor with Dynamic Project Previews */}
+            
             <div className={`relative bg-slate-950 border-4 rounded-2xl overflow-hidden aspect-[4/3] group shadow-[0_0_15px_rgba(0,0,0,0.6)] flex flex-col`}
                  style={{ borderColor: activeProject.gemType === 'ruby' ? '#f43f5e' : activeProject.gemType === 'emerald' ? '#10b981' : activeProject.gemType === 'sapphire' ? '#3b82f6' : '#8b5cf6' }}>
               
-              {/* Retro scanlines and CRT phosphor grill effect */}
+              
               <div className="absolute inset-0 pointer-events-none z-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-60" />
               <div className="absolute inset-0 pointer-events-none z-20 bg-gradient-to-tr from-white/0 via-white/5 to-white/10" />
 
-              {/* Top Cabinet Border Banner */}
+              
               <div className="bg-black/90 border-b border-slate-900 px-3 py-1.5 flex justify-between items-center z-10 text-[8px] font-mono select-none">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                  <span className="text-slate-400 font-black uppercase">MONITOR_01 // PREVIEW</span>
+                  <span className="text-slate-400 font-black uppercase">MONITOR_01</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-[7.5px] text-fuchsia-400 font-extrabold uppercase animate-pulse">CRT ENGINE LIVE</span>
                 </div>
               </div>
 
-              {/* Main screen area */}
+              
               <div className="flex-1 w-full bg-black relative overflow-hidden">
                 {activeProject.id === 'traffic-flow' ? (
                   <TrafficSimulation />
@@ -534,17 +534,17 @@ export default function ArcadeCabinet() {
                 )}
               </div>
 
-              {/* CRT Glass Curvature / Gloss Overlay reflection */}
+              
               <div className="absolute inset-0 pointer-events-none z-20 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
 
-              {/* Bottom bezel status bar */}
+              
               <div className="bg-black border-t border-slate-900/80 px-3 py-1.5 flex justify-between items-center z-10 text-[7.5px] font-mono select-none">
                 <span className="text-slate-500 font-bold uppercase">{activeProject.id.toUpperCase()}.EXE</span>
                 <span className="text-[#00ff41] font-black uppercase tracking-widest bg-[#00ff41]/10 px-1.5 py-0.5 rounded border border-[#00ff41]/20">ARCADE_THEME</span>
               </div>
             </div>
 
-            {/* Metrics Dashboard Grid */}
+            
             <div>
               <label className="text-[10px] font-mono text-slate-400 block mb-2 tracking-wide uppercase">
                 CARTRIDGE DIAGNOSTICS
@@ -564,10 +564,10 @@ export default function ArcadeCabinet() {
             </div>
           </div>
 
-          {/* Right Column: Descriptions & Details */}
+          
           <div className="lg:col-span-7 flex flex-col justify-between gap-6">
             <div className="space-y-4">
-              {/* Project Title */}
+              
               <div>
                 <h2 className="text-xl lg:text-2xl font-bold font-sans text-slate-100 tracking-tight leading-none mb-2">
                   {activeProject.title}
@@ -577,7 +577,7 @@ export default function ArcadeCabinet() {
                 </p>
               </div>
 
-              {/* Technologies list */}
+              
               <div className="flex flex-wrap gap-1.5">
                 {activeProject.tags.map((tag) => (
                   <span
@@ -589,7 +589,7 @@ export default function ArcadeCabinet() {
                 ))}
               </div>
 
-              {/* Bulleted accomplishment details */}
+              
               <div className="space-y-2 bg-slate-950/40 p-4.5 border border-slate-900 rounded-2xl">
                 <label className="text-[9px] font-mono text-slate-400 block tracking-wide uppercase mb-1">
                   CORE OUTCOMES & EXPERIENCES
@@ -605,7 +605,7 @@ export default function ArcadeCabinet() {
               </div>
             </div>
 
-            {/* Launch Links */}
+            
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href={activeProject.github}
@@ -632,9 +632,9 @@ export default function ArcadeCabinet() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Arcade cabinet joystick visual mockup deck at the bottom */}
+      
       <div className="mt-8 border-t border-slate-900/60 pt-6 flex justify-between items-center bg-slate-950/20 -mx-6 -mb-6 px-6 pb-6 rounded-b-3xl">
-        {/* Joystick controller simulation */}
+        
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-slate-900 rounded-full border border-slate-800 flex items-center justify-center relative shadow-inner">
             <div className="w-4 h-4 rounded-full bg-rose-500 animate-pulse relative" />
@@ -646,7 +646,7 @@ export default function ArcadeCabinet() {
           </div>
         </div>
 
-        {/* Big physical buttons */}
+        
         <div className="flex gap-2">
           <button
             onClick={handlePrev}
