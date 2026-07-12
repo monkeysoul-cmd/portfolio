@@ -14,7 +14,7 @@ export interface Project {
 export interface Skill {
   name: string;
   category: 'Languages' | 'Frameworks & Libraries' | 'Databases & Tools' | 'Concepts';
-  level: number; // 1 to 5
+  level: number; 
   description: string;
   gemType: 'ruby' | 'emerald' | 'sapphire' | 'amethyst';
   unlockedAtGems: number;

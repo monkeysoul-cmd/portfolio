@@ -36,15 +36,15 @@ import ArcadeCabinet from './components/ArcadeCabinet';
 import ArcadeBackground from './components/ArcadeBackground';
 
 export default function App() {
-  const [gemsCount, setGemsCount] = useState(3); // Start with 3 standard unlocked gems
+  const [gemsCount, setGemsCount] = useState(3); 
   const [scorePoints, setScorePoints] = useState(0);
   const [clockTime, setClockTime] = useState('');
-  // Form states
+  
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formTransmitting, setFormTransmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
 
-  // Sound triggers
+  
   const onSoundTriggerRef = useRef<((type: 'coin' | 'laser' | 'powerup' | 'gem') => void) | null>(null);
 
   const triggerSound = (type: 'coin' | 'laser' | 'powerup' | 'gem') => {
@@ -53,12 +53,12 @@ export default function App() {
     }
   };
 
-  // Log events to virtual terminal / console
+  
   const logEvent = (msg: string) => {
     console.log(`[EVENT]: ${msg}`);
   };
 
-  // Clock tick
+  
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -71,7 +71,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Increase gems count as score climbs
+  
   useEffect(() => {
     if (scorePoints > 0 && scorePoints % 200 === 0) {
       setGemsCount((g) => {
@@ -126,24 +126,24 @@ export default function App() {
       }}
     >
       <ArcadeBackground />
-      {/* Absolute Corner Borders for the viewport framing */}
+      
       <div className="fixed top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-[#00ff41] z-50 pointer-events-none" />
       <div className="fixed bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-[#00ff41] z-50 pointer-events-none" />
 
-      {/* Subtle CRT Overlay & Vignette */}
+      
       <div className="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.04),rgba(0,255,0,0.02),rgba(0,0,255,0.04))] bg-[length:100%_4px,4px_100%] opacity-40" />
       <div className="crt-vignette" />
 
-      {/* Main Top Stat Bar / Navigation Header (Design Theme replica) */}
+      
       <header className="max-w-6xl mx-auto px-4 pt-6 pb-4 flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-[#00ff41] mb-8 gap-4">
         <div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tighter uppercase italic retro-header select-none name-glitch-hover" data-text="AYUSH_BHATI.CMD">
             AYUSH_BHATI.CMD
           </h1>
           <p className="text-xs mt-1 text-[#00ff41] opacity-80 uppercase font-bold animate-arcade-flicker">
-            PLAYER PORTFOLIO // EMU_STATUS: ONLINE
+            PLAYER PORTFOLIO 
           </p>
         </div>
         <div className="w-full md:w-auto flex flex-wrap justify-between md:justify-end gap-6 items-center">
@@ -157,11 +157,11 @@ export default function App() {
         </div>
       </header>
 
-      {/* Hero Header Space */}
+      
       <section className="max-w-6xl mx-auto px-4 pt-4 pb-6 text-center relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-[#ff00ff]/5 rounded-full blur-3xl -z-10" />
 
-        {/* Level Emblem */}
+        
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -172,7 +172,7 @@ export default function App() {
           RUNNER-UP • SMART INDIA HACKATHON 2025
         </motion.div>
 
-        {/* Animated Greeting */}
+        
         <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff41] mb-1">
           {"Hii, i am".split('').map((char, index) => (
             <motion.span
@@ -186,7 +186,7 @@ export default function App() {
           ))}
         </div>
 
-        {/* Main Name Heading */}
+        
         <motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -197,7 +197,7 @@ export default function App() {
           AYUSH BHATI
         </motion.h2>
 
-        {/* Subtitle / Bio */}
+        
         <motion.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -210,7 +210,7 @@ export default function App() {
           <span className="text-[#ff00ff] font-extrabold">MongoDB</span>. I focus on building beautiful, interactive, and easy-to-use websites. I also designed an award-winning traffic simulator for SIH and an AI medical helper.
         </motion.p>
 
-        {/* Profile badges / social links */}
+        
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -245,7 +245,7 @@ export default function App() {
             EMAIL AYUSH
           </a>
 
-          {/* Direct Resume Link Option */}
+          
           <button
             onClick={() => {
               logEvent('DOWNLOADING AYUSH_BHATI_RESUME.PDF...');
@@ -260,10 +260,10 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* Main Interactive Deck Grid (Cabinet & Synth Side-by-Side) */}
+      
       <main className="max-w-6xl mx-auto px-4 pb-16 space-y-16">
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Playable Game Cabinet Box */}
+          
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2 group">
@@ -283,7 +283,7 @@ export default function App() {
             />
           </div>
 
-          {/* Retro Bug Blaster Arcade Game */}
+          
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs font-mono text-fuchsia-400 font-bold bg-fuchsia-950/40 px-2 py-0.5 rounded border border-fuchsia-900/40">
@@ -304,7 +304,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Cartridge SELECT STAGE (Projects) Section */}
+        
         <section className="space-y-6" id="projects">
           <div className="flex items-center gap-2 group">
             <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(52,211,153,0.3)]">
@@ -318,7 +318,7 @@ export default function App() {
           <ArcadeCabinet />
         </section>
 
-        {/* HERO BAG INVENTORY (Skills) Section */}
+        
         <section className="space-y-6" id="skills">
           <div className="flex items-center gap-2 group">
             <span className="text-xs font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(96,165,250,0.3)]">
@@ -332,7 +332,7 @@ export default function App() {
           <Inventory unlockedGemsCount={gemsCount} />
         </section>
 
-        {/* QUEST CHRONOLOGY (Timeline) Section */}
+        
         <section className="space-y-6" id="quests">
           <div className="flex items-center gap-2 group">
             <span className="text-xs font-mono text-amber-400 font-bold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(251,191,36,0.3)]">
@@ -346,7 +346,7 @@ export default function App() {
           <QuestLog />
         </section>
 
-        {/* TROPHY CABINET (Achievements) Section */}
+        
         <section className="space-y-6" id="achievements">
           <div className="flex items-center gap-2 group">
             <span className="text-xs font-mono text-pink-400 font-bold bg-pink-950/40 px-2 py-0.5 rounded border border-pink-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(244,114,182,0.3)]">
@@ -360,7 +360,7 @@ export default function App() {
           <AchievementsGrid onSoundTrigger={triggerSound} />
         </section>
 
-        {/* CHAT TRANSMISSION (Contact) Section */}
+        
         <section className="space-y-6" id="contact">
           <div className="flex items-center gap-2 group">
             <span className="text-xs font-mono text-fuchsia-400 font-bold bg-fuchsia-950/40 px-2 py-0.5 rounded border border-fuchsia-900/40 group-hover:hover-glitch-text transition-all cursor-default shadow-[0_0_10px_rgba(232,121,249,0.3)]">
@@ -372,7 +372,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Info Deck */}
+            
             <div className="md:col-span-5 space-y-4">
               <div className="bg-slate-950/80 border border-slate-900 rounded-2xl p-5 space-y-4 shadow-inner">
                 <h4 className="text-sm font-bold text-slate-200">Ayush Bhati HQ</h4>
@@ -398,10 +398,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Competitive links box */}
+              
               <div className="bg-slate-950/50 border border-slate-900 rounded-2xl p-4 flex justify-between gap-2">
                 <a
-                  href="https://leetcode.com" // Default, user LeetCode listed
+                  href="https://leetcode.com" 
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 bg-slate-900 hover:bg-slate-800 text-[10px] font-mono py-2 rounded-xl text-center border border-slate-850 hover:text-white"
@@ -409,7 +409,7 @@ export default function App() {
                   LeetCode
                 </a>
                 <a
-                  href="https://www.codechef.com" // Default, user CodeChef listed
+                  href="https://www.codechef.com" 
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 bg-slate-900 hover:bg-slate-800 text-[10px] font-mono py-2 rounded-xl text-center border border-slate-850 hover:text-white"
@@ -427,13 +427,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Form deck */}
+            
             <div className="md:col-span-7">
               <form
                 onSubmit={handleFormSubmit}
                 className="bg-slate-950/80 border border-slate-900 rounded-3xl p-6 lg:p-8 space-y-4 relative overflow-hidden"
               >
-                {/* Visual glow overlay */}
+                
                 {formSuccess && (
                   <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center text-center z-10 p-4">
                     <Sparkles className="w-10 h-10 text-emerald-400 mb-2 animate-bounce" />
@@ -507,23 +507,23 @@ export default function App() {
         </section>
       </main>
 
-      {/* Bottom Ticker Marquee */}
+      
       <footer className="mt-12 border-t-2 border-b-2 border-[#00ff41]/50 bg-[#111111]/70 py-3 ticker-wrap select-none">
         <div className="ticker-content text-[11px] italic font-mono uppercase tracking-widest text-[#00ff41]">
           <span className="mx-8">INSERT_COIN_TO_HIRE</span>
           <span className="mx-8 opacity-60 text-white">READY PLAYER ONE</span>
-          <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS //</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS</span>
           <span className="mx-8 text-white">GITHUB.COM/MONKEYSOUL-CMD</span>
-          <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM //</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM</span>
           <span className="mx-8">INSERT_COIN_TO_HIRE</span>
           <span className="mx-8 opacity-60 text-white">READY PLAYER ONE</span>
-          <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS //</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS</span>
           <span className="mx-8 text-white">GITHUB.COM/MONKEYSOUL-CMD</span>
-          <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM //</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM</span>
         </div>
       </footer>
 
-      {/* Footer credits */}
+      
       <footer className="bg-[#050505] py-8 text-center text-xs font-mono text-[#00ff41]/60 space-y-2 border-t-2 border-[#00ff41]/10">
         <p className="flex items-center justify-center gap-1.5">
           <Heart className="w-3 h-3 text-[#ff00ff] fill-[#ff00ff] animate-pulse" />

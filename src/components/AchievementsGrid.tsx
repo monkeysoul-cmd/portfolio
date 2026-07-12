@@ -43,7 +43,7 @@ export default function AchievementsGrid({ onSoundTrigger }: AchievementsGridPro
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8" id="achievements-podiums">
-      {/* Competitive Achievements */}
+      
       <div className="lg:col-span-7 space-y-4">
         <label className="text-[10px] font-mono text-slate-400 block tracking-wider uppercase">
           Trophies & High Scores
@@ -56,7 +56,7 @@ export default function AchievementsGrid({ onSoundTrigger }: AchievementsGridPro
               onMouseEnter={() => onSoundTrigger('coin')}
               className="bg-slate-950/80 border border-slate-900 hover:border-slate-800 rounded-2xl p-5 relative overflow-hidden group transition-all duration-300 shadow-inner flex flex-col justify-between hover:scale-101"
             >
-              {/* Background Glow */}
+              
               <div className="absolute top-0 right-0 w-24 h-24 bg-violet-600/2 rounded-full blur-2xl group-hover:bg-violet-600/5 transition-all" />
 
               <div className="space-y-3">
@@ -91,7 +91,7 @@ export default function AchievementsGrid({ onSoundTrigger }: AchievementsGridPro
         </div>
       </div>
 
-      {/* Certifications Quest */}
+      
       <div className="lg:col-span-5 space-y-4">
         <label className="text-[10px] font-mono text-slate-400 block tracking-wider uppercase">
           Acquired Certifications

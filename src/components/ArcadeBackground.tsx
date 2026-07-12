@@ -3,21 +3,21 @@ import { Ghost, Rocket, Sword, Coins, Star, Zap, Target, Gamepad2 } from 'lucide
 export default function ArcadeBackground() {
   return (
     <>
-      {/* Deep Space Stars Background */}
+      
       <div className="star-field" />
       <div className="star-field layer-2" />
       <div className="star-field layer-3" />
 
-      {/* Synthwave Perspective Grid */}
+      
       <div className="synthwave-grid" />
 
-      {/* Random Lasers in Background */}
+      
       <div className="laser-beam" style={{ left: '10%', animationDelay: '0s', height: '150px' }} />
       <div className="laser-beam" style={{ left: '35%', animationDelay: '2s', height: '120px', background: 'linear-gradient(to bottom, transparent, #00ff41, #00ff41, transparent)', boxShadow: '0 0 10px #00ff41' }} />
       <div className="laser-beam" style={{ left: '70%', animationDelay: '1.2s', height: '200px' }} />
       <div className="laser-beam" style={{ left: '85%', animationDelay: '3.5s', height: '100px', background: 'linear-gradient(to bottom, transparent, #00ff41, #00ff41, transparent)', boxShadow: '0 0 10px #00ff41' }} />
 
-      {/* Floating Arcade Icons (Layered Parallax) */}
+      
       <div className="arcade-bg-element f-1" style={{ top: '15%', left: '5%', color: '#ff00ff' }}>
         <Ghost size={64} strokeWidth={1} />
       </div>
@@ -40,7 +40,7 @@ export default function ArcadeBackground() {
         <Zap size={40} strokeWidth={1} />
       </div>
       
-      {/* Animated Rising Stars */}
+      
       {[...Array(5)].map((_, i) => (
         <div 
           key={i} 

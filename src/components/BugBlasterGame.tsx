@@ -71,14 +71,14 @@ export default function BugBlasterGame({
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   
-  // Audio Context for sound synthesis (maintains cabinet audio integration!)
+  
   const audioCtxRef = useRef<AudioContext | null>(null);
   const mainGainNodeRef = useRef<GainNode | null>(null);
 
-  // Keyboard controls status ref
+  
   const keysPressed = useRef<{ [key: string]: boolean }>({});
 
-  // Game loop variables held in refs to prevent closure stales
+  
   const playerX = useRef(150);
   const bullets = useRef<Bullet[]>([]);
   const enemies = useRef<Enemy[]>([]);
@@ -88,14 +88,14 @@ export default function BugBlasterGame({
   const animationFrameId = useRef<number | null>(null);
   const isAutoFiring = useRef(false);
 
-  // Project definitions based on the user's actual resume data
+  
   const cartridges: ProjectCartridge[] = [
     {
       id: 'traffic',
       title: 'Traffic Flow',
       subtitle: 'Real-Time Monitoring',
       date: 'Sep 2025 - Nov 2025',
-      color: '#fbbf24', // Amber
+      color: '#fbbf24', 
       accentColor: '#f59e0b',
       bgColor: 'bg-amber-950/20',
       glowColor: 'shadow-amber-500/40',
@@ -130,7 +130,7 @@ export default function BugBlasterGame({
       title: 'Health Assistant',
       subtitle: 'AI Symptom Checker',
       date: 'Dec 2025 - Jan 2026',
-      color: '#00ff41', // Emerald green
+      color: '#00ff41', 
       accentColor: '#10b981',
       bgColor: 'bg-emerald-950/20',
       glowColor: 'shadow-emerald-500/40',
@@ -165,7 +165,7 @@ export default function BugBlasterGame({
       title: 'CodeAlpha Music',
       subtitle: 'Audio Sync Console',
       date: 'Jul 2025 - Aug 2025',
-      color: '#ff00ff', // Hot Pink
+      color: '#ff00ff', 
       accentColor: '#ec4899',
       bgColor: 'bg-fuchsia-950/20',
       glowColor: 'shadow-fuchsia-500/40',
@@ -199,7 +199,7 @@ export default function BugBlasterGame({
 
   const currentCartridge = cartridges.find(c => c.id === selectedProject) || cartridges[0];
 
-  // Initialize audio synth context
+  
   const initAudio = () => {
     if (!audioCtxRef.current) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -213,7 +213,7 @@ export default function BugBlasterGame({
     }
   };
 
-  // Sound triggers
+  
   const triggerSound = (type: 'coin' | 'laser' | 'powerup' | 'gem') => {
     try {
       initAudio();
@@ -226,12 +226,12 @@ export default function BugBlasterGame({
       const gainNode = ctx.createGain();
 
       osc.connect(gainNode);
-      gainNode.connect(ctx.destination); // Direct bypass for reliable output
+      gainNode.connect(ctx.destination); 
 
       if (type === 'coin') {
         osc.type = 'square';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        osc.frequency.setValueAtTime(523.25, now); 
+        osc.frequency.setValueAtTime(659.25, now + 0.08); 
         gainNode.gain.setValueAtTime(0.08, now);
         gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
         osc.start(now);
@@ -246,18 +246,18 @@ export default function BugBlasterGame({
         osc.stop(now + 0.12);
       } else if (type === 'powerup') {
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(261.63, now); // C4
-        osc.frequency.setValueAtTime(329.63, now + 0.05); // E4
-        osc.frequency.setValueAtTime(392.00, now + 0.1); // G4
-        osc.frequency.setValueAtTime(523.25, now + 0.15); // C5
+        osc.frequency.setValueAtTime(261.63, now); 
+        osc.frequency.setValueAtTime(329.63, now + 0.05); 
+        osc.frequency.setValueAtTime(392.00, now + 0.1); 
+        osc.frequency.setValueAtTime(523.25, now + 0.15); 
         gainNode.gain.setValueAtTime(0.1, now);
         gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.start(now);
         osc.stop(now + 0.4);
       } else if (type === 'gem') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(987.77, now); // B5
-        osc.frequency.setValueAtTime(1318.51, now + 0.04); // E6
+        osc.frequency.setValueAtTime(987.77, now); 
+        osc.frequency.setValueAtTime(1318.51, now + 0.04); 
         gainNode.gain.setValueAtTime(0.08, now);
         gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
         osc.start(now);
@@ -268,19 +268,19 @@ export default function BugBlasterGame({
     }
   };
 
-  // Bind to App-level sound triggering ref
+  
   useEffect(() => {
     onSoundTriggerRef.current = (type) => {
       triggerSound(type);
     };
   }, []);
 
-  // Keyboard Event Handlers
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       keysPressed.current[e.key.toLowerCase()] = true;
       if (e.key === ' ' && gameState === 'playing') {
-        e.preventDefault(); // Prevent standard browser scroll space
+        e.preventDefault(); 
         fireLaser();
       }
     };
@@ -297,7 +297,7 @@ export default function BugBlasterGame({
     };
   }, [gameState, selectedProject]);
 
-  // Handle Stars Background Generation
+  
   const initStars = (width: number, height: number) => {
     stars.current = Array.from({ length: 40 }, () => ({
       x: Math.random() * width,
@@ -307,7 +307,7 @@ export default function BugBlasterGame({
     }));
   };
 
-  // Generate an enemy wave using bugs of the currently active cartridge
+  
   const spawnEnemyWave = (width: number) => {
     if (!selectedProject) return;
 
@@ -318,7 +318,7 @@ export default function BugBlasterGame({
       const template = availableBugs[Math.floor(Math.random() * availableBugs.length)];
       enemies.current.push({
         x: Math.random() * (width - 90) + 10,
-        y: -Math.random() * 45 - 5, // Start very close to screen for instant appearance
+        y: -Math.random() * 45 - 5, 
         w: 76,
         h: 22,
         type: template.type,
@@ -331,15 +331,15 @@ export default function BugBlasterGame({
     }
   };
 
-  // Fire laser shot
+  
   const fireLaser = () => {
     const now = Date.now();
-    if (now - lastShotTime.current < 220) return; // Burst rate ceiling limit
+    if (now - lastShotTime.current < 220) return; 
     lastShotTime.current = now;
 
     bullets.current.push({
       x: playerX.current,
-      y: 280, // Height just above ship
+      y: 280, 
       w: 3.5,
       h: 11,
       vy: -6.5
@@ -347,7 +347,7 @@ export default function BugBlasterGame({
     triggerSound('laser');
   };
 
-  // Trigger neon particles explosion
+  
   const createExplosion = (x: number, y: number, color: string) => {
     for (let i = 0; i < 18; i++) {
       particles.current.push({
@@ -362,7 +362,7 @@ export default function BugBlasterGame({
     }
   };
 
-  // Start / restart Game Setup
+  
   const startGame = (projectId?: 'traffic' | 'health' | 'music') => {
     const activeProject = projectId || selectedProject;
     if (!activeProject) return;
@@ -379,15 +379,15 @@ export default function BugBlasterGame({
     setGameState('playing');
     triggerSound('powerup');
 
-    // Spawn level 1 enemies immediately close to top of screen so they appear instantly
+    
     const activeCart = cartridges.find(c => c.id === activeProject) || cartridges[0];
     const availableBugs = activeCart.bugs;
-    const waveCount = 3; // level 1 + 2
+    const waveCount = 3; 
     enemies.current = Array.from({ length: waveCount }, () => {
       const template = availableBugs[Math.floor(Math.random() * availableBugs.length)];
       return {
         x: Math.random() * (300 - 90) + 10,
-        y: -Math.random() * 45 - 5, // Starts just offscreen and appears instantly
+        y: -Math.random() * 45 - 5, 
         w: 76,
         h: 22,
         type: template.type,
@@ -400,14 +400,14 @@ export default function BugBlasterGame({
     });
   };
 
-  // Main Canvas Rendering & Physics Game Loop
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Fixed internal resolution
+    
     const width = 300;
     const height = 320;
     canvas.width = width;
@@ -420,7 +420,7 @@ export default function BugBlasterGame({
     const updateLoop = () => {
       if (gameState !== 'playing') return;
 
-      // 1. Move Player
+      
       if (keysPressed.current['arrowleft'] || keysPressed.current['a']) {
         playerX.current = Math.max(15, playerX.current - 4);
       }
@@ -432,7 +432,7 @@ export default function BugBlasterGame({
         fireLaser();
       }
 
-      // 2. Spawn Enemies if current wave destroyed
+      
       if (enemies.current.length === 0) {
         spawnEnemyWave(width);
         setLevel((prev) => {
@@ -443,11 +443,11 @@ export default function BugBlasterGame({
         });
       }
 
-      // 3. Clear Canvas
+      
       ctx.fillStyle = '#030306';
       ctx.fillRect(0, 0, width, height);
 
-      // 4. Draw & Update stars
+      
       ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
       stars.current.forEach((star) => {
         star.y += star.speed;
@@ -458,7 +458,7 @@ export default function BugBlasterGame({
         ctx.fillRect(star.x, star.y, star.size, star.size);
       });
 
-      // 5. Draw & Update bullets
+      
       ctx.fillStyle = currentCartridge.color;
       bullets.current = bullets.current.filter((b) => {
         b.y += b.vy;
@@ -466,7 +466,7 @@ export default function BugBlasterGame({
         return b.y > 0;
       });
 
-      // 6. Draw & Update particles
+      
       particles.current = particles.current.filter((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -479,25 +479,25 @@ export default function BugBlasterGame({
         return p.alpha > 0;
       });
 
-      // 7. Draw & Update Enemies with Insect Leg animations & Neon Glow!
+      
       enemies.current.forEach((enemy, eIdx) => {
         enemy.x += enemy.vx;
-        enemy.y += 0.4 * (1 + level * 0.1); // Descend speed
+        enemy.y += 0.4 * (1 + level * 0.1); 
 
-        // Boundary bounce horizontal
+        
         if (enemy.x <= 5 || enemy.x >= width - enemy.w - 5) {
           enemy.vx *= -1;
         }
 
         ctx.save();
-        // Draw retro physical insect legs wiggling on update loop
+        
         ctx.strokeStyle = enemy.color;
         ctx.lineWidth = 1.5;
-        ctx.shadowBlur = 0; // Disable shadow glow just for legs
+        ctx.shadowBlur = 0; 
 
         const legWiggle = Math.sin(Date.now() / 120 + enemy.y / 8) * 3.5;
 
-        // Draw Left Legs
+        
         ctx.beginPath();
         ctx.moveTo(enemy.x, enemy.y + 5);
         ctx.lineTo(enemy.x - 7, enemy.y + 3 + legWiggle);
@@ -507,7 +507,7 @@ export default function BugBlasterGame({
         ctx.lineTo(enemy.x - 7, enemy.y + 19 + legWiggle);
         ctx.stroke();
 
-        // Draw Right Legs
+        
         ctx.beginPath();
         ctx.moveTo(enemy.x + enemy.w, enemy.y + 5);
         ctx.lineTo(enemy.x + enemy.w + 7, enemy.y + 3 + legWiggle);
@@ -517,7 +517,7 @@ export default function BugBlasterGame({
         ctx.lineTo(enemy.x + enemy.w + 7, enemy.y + 19 + legWiggle);
         ctx.stroke();
 
-        // Draw head antennae
+        
         ctx.beginPath();
         ctx.moveTo(enemy.x + enemy.w / 3, enemy.y);
         ctx.lineTo(enemy.x + enemy.w / 3 - 4, enemy.y - 5);
@@ -525,7 +525,7 @@ export default function BugBlasterGame({
         ctx.lineTo(enemy.x + (2 * enemy.w) / 3 + 4, enemy.y - 5);
         ctx.stroke();
 
-        // Draw Glowing bounding capsule box (HIGH VISIBILITY!)
+        
         ctx.shadowBlur = 12;
         ctx.shadowColor = enemy.color;
         ctx.fillStyle = 'rgba(5, 5, 8, 0.9)';
@@ -534,36 +534,36 @@ export default function BugBlasterGame({
         ctx.fill();
         ctx.stroke();
 
-        // Glowing Core LED Dot
+        
         ctx.shadowBlur = 0;
         ctx.fillStyle = enemy.color;
         ctx.beginPath();
         ctx.arc(enemy.x + 8, enemy.y + enemy.h / 2, 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Bug exception monospace label (Highly legible white)
+        
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 8.5px monospace';
         ctx.textAlign = 'left';
         ctx.fillText(enemy.label, enemy.x + 16, enemy.y + 14);
         ctx.restore();
 
-        // Check breach of firewall
+        
         if (enemy.y > height - 40) {
           enemies.current.splice(eIdx, 1);
           setShield((prev) => {
             const nextShield = Math.max(0, prev - 20);
-            triggerSound('coin'); // Alert warning trigger
+            triggerSound('coin'); 
             if (nextShield <= 0) {
               setGameState('gameover');
-              triggerSound('gem'); // Game over crash sound
+              triggerSound('gem'); 
             }
             return nextShield;
           });
         }
       });
 
-      // 8. Bullet <-> Enemy Collisions
+      
       bullets.current.forEach((bullet, bIdx) => {
         enemies.current.forEach((enemy, eIdx) => {
           if (
@@ -572,12 +572,12 @@ export default function BugBlasterGame({
             bullet.y >= enemy.y &&
             bullet.y <= enemy.y + enemy.h
           ) {
-            // Remove bullet
+            
             bullets.current.splice(bIdx, 1);
             enemy.hp -= 1;
 
             if (enemy.hp <= 0) {
-              // Destroy Enemy
+              
               createExplosion(enemy.x + enemy.w / 2, enemy.y + enemy.h / 2, enemy.color);
               enemies.current.splice(eIdx, 1);
               setGameScore((prev) => {
@@ -586,14 +586,14 @@ export default function BugBlasterGame({
                 return prev + added;
               });
             } else {
-              // Hit flash
+              
               createExplosion(bullet.x, bullet.y, '#ffffff');
             }
           }
         });
       });
 
-      // 9. Draw Player Spaceship (Matching active cartridge theme)
+      
       const shipX = playerX.current;
       const shipY = 295;
 
@@ -601,12 +601,12 @@ export default function BugBlasterGame({
       ctx.shadowBlur = 12;
       ctx.shadowColor = currentCartridge.color;
 
-      // Laser Cannon tips
+      
       ctx.fillStyle = currentCartridge.color;
       ctx.fillRect(shipX - 12, shipY - 5, 3, 8);
       ctx.fillRect(shipX + 9, shipY - 5, 3, 8);
 
-      // Central body
+      
       ctx.fillStyle = currentCartridge.color;
       ctx.beginPath();
       ctx.moveTo(shipX, shipY - 12);
@@ -615,7 +615,7 @@ export default function BugBlasterGame({
       ctx.closePath();
       ctx.fill();
 
-      // Core engine thrust flame (flickering orange!)
+      
       ctx.shadowBlur = 0;
       ctx.fillStyle = Math.random() > 0.5 ? '#ff2a5f' : '#fbbf24';
       ctx.fillRect(shipX - 3, shipY + 9, 6, Math.random() * 5 + 3);
@@ -627,7 +627,7 @@ export default function BugBlasterGame({
     if (gameState === 'playing') {
       animationFrameId.current = requestAnimationFrame(updateLoop);
     } else {
-      // Demo screen or static preview
+      
       ctx.fillStyle = '#040407';
       ctx.fillRect(0, 0, width, height);
 
@@ -637,7 +637,7 @@ export default function BugBlasterGame({
       });
 
       if (gameState === 'welcome') {
-        // Glowing brand new welcome screen
+        
         ctx.save();
         ctx.shadowBlur = 15;
         ctx.shadowColor = '#f43f5e';
@@ -664,10 +664,10 @@ export default function BugBlasterGame({
         ctx.fillStyle = '#475569';
         ctx.fillText('POWERED BY RETRO EMULATOR CORE', width / 2, 215);
       } else if (gameState === 'cartridge_select') {
-        // Draw an ultra-interactive cybernetic retro BIOS / cartridge mounting display
+        
         ctx.save();
         
-        // Background scanlines grid effect
+        
         ctx.strokeStyle = 'rgba(56, 189, 248, 0.04)';
         ctx.lineWidth = 1;
         for (let y = 10; y < height; y += 12) {
@@ -677,7 +677,7 @@ export default function BugBlasterGame({
           ctx.stroke();
         }
 
-        // Title and outer console border
+        
         ctx.strokeStyle = selectedProject ? currentCartridge.color : '#38bdf8';
         ctx.lineWidth = 1.5;
         ctx.strokeRect(10, 15, width - 20, 290);
@@ -689,22 +689,22 @@ export default function BugBlasterGame({
         ctx.textAlign = 'center';
         ctx.fillText('ARCADE BIOS COMPILER', width / 2, 18);
 
-        // Render selected cartridge visual card or general selector screen
+        
         if (selectedProject) {
-          // Draw a glowing microchip card structure
+          
           ctx.fillStyle = `${currentCartridge.color}15`;
           ctx.fillRect(20, 40, width - 40, 155);
           ctx.strokeStyle = currentCartridge.color;
           ctx.lineWidth = 1;
           ctx.strokeRect(20, 40, width - 40, 155);
           
-          // Shutter visual accents
+          
           ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
           ctx.fillRect(width / 2 - 30, 40, 60, 25);
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
           ctx.strokeRect(width / 2 - 30, 40, 60, 25);
           
-          // Microchip status dot
+          
           const pulse = Math.abs(Math.sin(Date.now() / 250));
           ctx.fillStyle = `rgba(16, 185, 129, ${0.4 + pulse * 0.6})`;
           ctx.beginPath();
@@ -716,7 +716,7 @@ export default function BugBlasterGame({
           ctx.textAlign = 'left';
           ctx.fillText('MOUNT_OK', 44, 55);
 
-          // Details grid
+          
           ctx.textAlign = 'center';
           ctx.font = 'bold 11px monospace';
           ctx.fillStyle = '#ffffff';
@@ -739,7 +739,7 @@ export default function BugBlasterGame({
           ctx.fillStyle = '#64748b';
           ctx.fillText('STATUS: WAITING FOR COMPLIANT RUN...', width / 2, 172);
 
-          // Glowing instructions
+          
           ctx.fillStyle = `rgba(255, 255, 255, ${0.35 + pulse * 0.65})`;
           ctx.font = 'bold 8.5px monospace';
           ctx.fillText('▶ PRESS START BUTTON BELOW ◀', width / 2, 230);
@@ -748,7 +748,7 @@ export default function BugBlasterGame({
           ctx.fillStyle = '#64748b';
           ctx.fillText('OR CHOOSE A DIFFERENT MEMORY DRIVE', width / 2, 248);
         } else {
-          // BIOS general guide
+          
           ctx.font = 'bold 12px monospace';
           ctx.fillStyle = '#38bdf8';
           ctx.textAlign = 'center';
@@ -757,7 +757,7 @@ export default function BugBlasterGame({
           ctx.save();
           const pulseColor = Math.abs(Math.sin(Date.now() / 250));
           
-          // Draw a retro glowing box around the select text
+          
           ctx.strokeStyle = `rgba(244, 63, 94, ${0.3 + pulseColor * 0.5})`;
           ctx.lineWidth = 1;
           ctx.strokeRect(30, 91, width - 60, 22);
@@ -771,7 +771,7 @@ export default function BugBlasterGame({
           ctx.fillText('⚡ SELECT A PROJECT TO PLAY GAME ⚡', width / 2, 105);
           ctx.restore();
 
-          // Render miniature list
+          
           cartridges.forEach((cart, i) => {
             const yOffset = 150 + i * 26;
             ctx.fillStyle = selectedProject === cart.id ? `${cart.color}15` : 'rgba(255, 255, 255, 0.02)';
@@ -833,12 +833,12 @@ export default function BugBlasterGame({
       id="retro-bug-blaster-arcade"
       style={{ borderColor: selectedProject ? currentCartridge.color : '#475569' }}
     >
-      {/* Visual CRT Scanline Grid Decal & Moving Scanline */}
+      
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[length:15px_15px] z-0" />
       <div className="animate-scanline" />
 
       <div>
-        {/* Component Header with Arcade Status LED */}
+        
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
           <div className="flex items-center gap-2 z-10 relative">
             <Target className="w-4 h-4 text-slate-400 animate-pulse" style={{ color: selectedProject ? currentCartridge.color : '#94a3b8' }} />
@@ -874,7 +874,7 @@ export default function BugBlasterGame({
           </div>
         </div>
 
-        {/* Arcade Cabinet HUD Bar */}
+        
         <div className="grid grid-cols-3 gap-2 mb-3 text-[9px] font-mono text-white/90">
           <div className="bg-black/80 border border-slate-800 p-1.5 rounded text-center">
             <span className="text-[7px] text-slate-500 block leading-tight uppercase">Shield Integrity</span>
@@ -896,7 +896,7 @@ export default function BugBlasterGame({
           </div>
         </div>
 
-        {/* HTML5 Game Stage Canvas Wrapper */}
+        
         <div className="bg-[#030306] border border-slate-800 relative overflow-hidden flex items-center justify-center rounded-lg shadow-inner">
           <canvas
             ref={canvasRef}
@@ -904,7 +904,7 @@ export default function BugBlasterGame({
             style={{ imageRendering: 'pixelated' }}
           />
 
-          {/* Welcome Screen Start Game Button */}
+          
           {gameState === 'welcome' && (
             <div className="absolute inset-0 bg-black/45 flex items-center justify-center flex-col pt-20">
               <button
@@ -920,7 +920,7 @@ export default function BugBlasterGame({
             </div>
           )}
 
-          {/* Large Retro Play/Restart overlay for Gameover */}
+          
           {gameState === 'gameover' && (
             <div className="absolute inset-0 bg-black/80 flex items-center justify-center flex-col gap-4 pt-10 z-20">
               <div className="text-rose-500 font-black font-mono text-xl tracking-widest uppercase bb-critical-shake drop-shadow-[0_0_10px_rgba(225,29,72,0.8)]">
@@ -943,7 +943,7 @@ export default function BugBlasterGame({
             </div>
           )}
 
-          {/* Cartridge Selection Interactive Launch Button Overlay */}
+          
           {gameState === 'cartridge_select' && selectedProject && (
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
               <button
@@ -966,7 +966,7 @@ export default function BugBlasterGame({
         </div>
       </div>
 
-      {/* Cartridge Insertion Tray Menu (Only visible during cartridge select state) */}
+      
       {gameState === 'cartridge_select' && (
         <div className="mt-5 border-t border-slate-800 pt-5">
           <div className="mb-4 bg-gradient-to-r from-fuchsia-950/30 via-pink-950/20 to-purple-950/30 border border-fuchsia-500/30 px-3 py-2 rounded-xl text-center shadow-[0_0_15px_rgba(244,63,94,0.1)] flex items-center justify-between gap-2">
@@ -997,7 +997,7 @@ export default function BugBlasterGame({
                 }`}
                 style={{ borderColor: selectedProject === cart.id ? cart.color : undefined }}
               >
-                {/* Physical Stripe */}
+                
                 <div 
                   className="absolute top-0 left-4 right-4 h-[3px] rounded-b-md opacity-80"
                   style={{ backgroundColor: cart.color }}
@@ -1025,7 +1025,7 @@ export default function BugBlasterGame({
             ))}
           </div>
 
-          {/* Dynamic Interactive Cartridge Terminal Console Details Panel */}
+          
           <div className="mt-3 bg-black/60 border border-slate-800 p-2.5 rounded-xl text-left transition-all duration-300">
             {selectedProject ? (
               <div className="animate-fadeIn">
@@ -1052,9 +1052,9 @@ export default function BugBlasterGame({
         </div>
       )}
 
-      {/* Retro Physical arcade controls (Joystick / Buttons) for mouse and touch play! */}
+      
       <div className="mt-4 border-t border-slate-800 pt-4 flex justify-between items-center bg-black/40 rounded-xl p-3">
-        {/* Physical D-Pad controller buttons */}
+        
         <div className="flex gap-2">
           <button
             onMouseDown={() => { keysPressed.current['arrowleft'] = true; }}
@@ -1080,7 +1080,7 @@ export default function BugBlasterGame({
           </button>
         </div>
 
-        {/* Master Fire Button */}
+        
         <button
           id="autofire-btn"
           onClick={(e) => {

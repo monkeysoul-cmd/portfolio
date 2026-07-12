@@ -106,7 +106,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" id="skills-inventory">
-      {/* Grid selector / Slots */}
+      
       <div className="lg:col-span-8 flex flex-col gap-5">
         <div className="flex flex-wrap gap-1.5 p-1 bg-slate-900 rounded-xl border border-slate-800">
           {categories.map((cat) => (
@@ -114,7 +114,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
               key={cat}
               onClick={() => {
                 setActiveCategory(cat);
-                // Auto-select first item of newly filtered list if items exist
+                
                 const list = SKILLS.filter((s) => cat === 'All' || s.category === cat);
                 if (list.length > 0) setSelectedSkill(list[0]);
               }}
@@ -129,7 +129,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
           ))}
         </div>
 
-        {/* Inventory Slots (RPG Box Style) */}
+        
         <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 relative overflow-hidden">
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-5 xl:grid-cols-6 gap-3.5">
             {filteredSkills.map((skill, index) => {
@@ -150,38 +150,38 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                   }`}
                   title={isLocked ? `Unlocks at ${skill.unlockedAtGems} Gem level` : skill.name}
                 >
-                  {/* Slot index number */}
+                  
                   <span className="absolute top-1 left-1.5 text-[9px] font-mono text-slate-500">
                     {String(index + 1).padStart(2, '0')}
                   </span>
 
-                  {/* Gem Graphic Representation */}
+                  
                   {isLocked ? (
                     <div className="text-slate-600 text-xs font-mono font-bold">LOCKED</div>
                   ) : (
                     <div className="relative flex flex-col items-center justify-center w-full h-full pt-3 px-1">
-                      {/* Gem Body (Diamond rotating shape) */}
+                      
                       <div className="relative flex items-center justify-center w-12 h-12 mb-2">
                         <div
                           className={`w-9 h-9 rotate-45 transition-transform group-hover:rotate-180 duration-500 absolute rounded-[2px] shadow-[0_0_12px_var(--tw-shadow-color)] ${colors.solid} ${colors.glow} float-pebble-${index % 4}`}
                         />
-                        {/* Inner Shine */}
+                        
                         <div className="w-1.5 h-1.5 bg-white/60 rounded-full absolute -top-0.5 -left-0.5 pointer-events-none blur-[0.5px]" />
                         
-                        {/* Short skill name or abbreviation inside the gem */}
+                        
                         <span className="absolute text-[8.5px] font-sans font-black text-white pointer-events-none select-none uppercase tracking-tighter">
                           {getSkillAbbreviation(skill.name)}
                         </span>
                       </div>
 
-                      {/* Tailored skill name underneath the pebble */}
+                      
                       <span className="text-[8px] font-mono font-bold uppercase text-slate-400 group-hover:text-slate-200 tracking-tight text-center truncate max-w-full">
                         {skill.name}
                       </span>
                     </div>
                   )}
 
-                  {/* Unlocking Level Overlay */}
+                  
                   {isLocked && (
                     <span className="absolute bottom-1 text-[8px] font-mono text-violet-400/80 bg-violet-950/40 px-1 rounded border border-violet-900/20">
                       LVL {skill.unlockedAtGems}
@@ -191,7 +191,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
               );
             })}
 
-            {/* Fill empty grid slots for RPG look */}
+            
             {Array(Math.max(0, 18 - filteredSkills.length))
               .fill(null)
               .map((_, i) => (
@@ -206,7 +206,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
         </div>
       </div>
 
-      {/* Item Details Info Panel (Right-Side Codex) */}
+      
       <div className="lg:col-span-4 h-full self-stretch flex flex-col">
         <AnimatePresence mode="wait">
           {selectedSkill ? (
@@ -218,7 +218,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
               transition={{ duration: 0.2 }}
               className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 relative overflow-hidden flex-1 flex flex-col justify-between shadow-xl"
             >
-              {/* Background gem flare */}
+              
               <div
                 className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl -z-10 opacity-10 ${
                   getGemColors(selectedSkill.gemType).solid
@@ -226,7 +226,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
               />
 
               <div>
-                {/* Header info */}
+                
                 <div className="flex items-center gap-2 mb-3.5">
                   <div
                     className={`p-1.5 rounded-lg border flex items-center justify-center ${
@@ -245,7 +245,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                   </div>
                 </div>
 
-                {/* Level / Stars Progress */}
+                
                 <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 mb-5">
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[10px] font-mono text-slate-400 font-bold">POWER LEVEL</span>
@@ -269,7 +269,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                   </div>
                 </div>
 
-                {/* Description */}
+                
                 <div>
                   <label className="text-[10px] font-mono text-slate-400 block mb-1">EQUIPPED ATTRIBUTES</label>
                   <p className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-3.5 rounded-xl border border-slate-800/60 font-sans min-h-[70px]">
@@ -278,7 +278,7 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                 </div>
               </div>
 
-              {/* RPG style metadata tags */}
+              
               <div className="mt-6 pt-4 border-t border-slate-800/60 grid grid-cols-2 gap-3">
                 <div className="bg-slate-950 p-2 rounded-lg border border-slate-800/40 text-center">
                   <span className="text-[9px] font-mono text-slate-500 block">PROFICIENCY</span>

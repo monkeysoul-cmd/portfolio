@@ -8,7 +8,7 @@ export const PROJECTS: Project[] = [
     longDescription: 'Led a 6-member team to develop a real-time traffic monitoring dashboard. Developed the entire dashboard in React.js, contributing over 70% of the codebase. It implements intelligent signal-timing logic which improves decision accuracy and cuts local congestion.',
     tags: ['React.js', 'Signal-Timing Logic', 'Tailwind CSS', 'WebSockets', 'D3.js'],
     github: 'https://github.com/monkeysoul-cmd/traffic-flow',
-    live: 'https://github.com/monkeysoul-cmd/traffic-flow', // Fallback link
+    live: 'https://github.com/monkeysoul-cmd/traffic-flow', 
     gemType: 'emerald',
     stats: [
       { label: 'Overall Perf', value: '+18%' },
@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
     longDescription: 'A fully self-contained smart assistant powered by natural language algorithms to evaluate patient symptoms. Developed the entire interactive UI and integrated high-speed REST APIs to support fluid, real-time client-to-server exchanges.',
     tags: ['React.js', 'AI Algorithms', 'REST APIs', 'Node.js', 'Express.js', 'State Management'],
     github: 'https://github.com/monkeysoul-cmd/Virtual-Health-Assistant',
-    live: 'https://github.com/monkeysoul-cmd/Virtual-Health-Assistant', // Fallback link
+    live: 'https://github.com/monkeysoul-cmd/Virtual-Health-Assistant', 
     gemType: 'ruby',
     stats: [
       { label: 'AI Suggestion Acc', value: '+22%' },
@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
 ];
 
 export const SKILLS: Skill[] = [
-  // Languages
+  
   { name: 'C++', category: 'Languages', level: 5, description: 'Core programming language for Data Structures & Algorithms.', gemType: 'sapphire', unlockedAtGems: 0 },
   { name: 'JavaScript', category: 'Languages', level: 5, description: 'Universal scripting for high-fidelity web dynamics.', gemType: 'ruby', unlockedAtGems: 0 },
   { name: 'TypeScript', category: 'Languages', level: 4, description: 'Type-safe scalable JavaScript app architecture.', gemType: 'emerald', unlockedAtGems: 2 },
@@ -52,7 +52,7 @@ export const SKILLS: Skill[] = [
   { name: 'HTML', category: 'Languages', level: 5, description: 'Semantic, accessible, and structured document layouts.', gemType: 'sapphire', unlockedAtGems: 0 },
   { name: 'CSS', category: 'Languages', level: 5, description: 'Pixel-perfect UI styling and responsive custom layouts.', gemType: 'ruby', unlockedAtGems: 0 },
 
-  // Frameworks
+  
   { name: 'React.js', category: 'Frameworks & Libraries', level: 5, description: 'Primary component-driven web framework.', gemType: 'emerald', unlockedAtGems: 0 },
   { name: 'Next.js', category: 'Frameworks & Libraries', level: 4, description: 'Server-side rendered React frameworks.', gemType: 'ruby', unlockedAtGems: 3 },
   { name: 'Angular.js', category: 'Frameworks & Libraries', level: 3, description: 'Client-side dynamic template application rendering.', gemType: 'amethyst', unlockedAtGems: 6 },
@@ -60,14 +60,14 @@ export const SKILLS: Skill[] = [
   { name: 'Node.js / Express', category: 'Frameworks & Libraries', level: 4, description: 'High-concurrency backend API routing systems.', gemType: 'amethyst', unlockedAtGems: 2 },
   { name: 'Tailwind CSS', category: 'Frameworks & Libraries', level: 5, description: 'Rapid utility-first CSS layout compilation.', gemType: 'ruby', unlockedAtGems: 0 },
 
-  // Databases & Tools
+  
   { name: 'MongoDB', category: 'Databases & Tools', level: 4, description: 'Document-oriented flexible NoSQL database system.', gemType: 'emerald', unlockedAtGems: 4 },
   { name: 'MySQL', category: 'Databases & Tools', level: 4, description: 'Relational query databases and schema modeling.', gemType: 'sapphire', unlockedAtGems: 5 },
   { name: 'AWS Cloud', category: 'Databases & Tools', level: 3, description: 'Cloud infrastructure deployment and computing services.', gemType: 'amethyst', unlockedAtGems: 7 },
   { name: 'RESTful APIs', category: 'Databases & Tools', level: 5, description: 'Secure request-response web protocol integrations.', gemType: 'ruby', unlockedAtGems: 1 },
   { name: 'Git & GitHub', category: 'Databases & Tools', level: 5, description: 'Distributed version control and team repositories.', gemType: 'emerald', unlockedAtGems: 0 },
 
-  // Concepts
+  
   { name: 'DSA / Algos', category: 'Concepts', level: 5, description: 'Advanced problem-solving & memory optimization.', gemType: 'sapphire', unlockedAtGems: 0 },
   { name: 'OOPs Pattern', category: 'Concepts', level: 5, description: 'Modular, reusable Object-Oriented clean system designs.', gemType: 'amethyst', unlockedAtGems: 1 },
   { name: 'Team Leadership', category: 'Concepts', level: 4, description: 'Coordinating developer pods & agile hackathons.', gemType: 'emerald', unlockedAtGems: 5 },
