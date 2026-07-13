@@ -162,14 +162,29 @@ export default function Inventory({ unlockedGemsCount }: InventoryProps) {
                     <div className="relative flex flex-col items-center justify-center w-full h-full pt-3 px-1">
                       
                       <div className="relative flex items-center justify-center w-12 h-12 mb-2">
-                        <div
-                          className={`w-9 h-9 rotate-45 transition-transform group-hover:rotate-180 duration-500 absolute rounded-[2px] shadow-[0_0_12px_var(--tw-shadow-color)] ${colors.solid} ${colors.glow} float-pebble-${index % 4}`}
+                        <motion.div
+                          animate={{ 
+                            y: [0, index % 2 === 0 ? -3 : 3, 0],
+                            scale: [1, 1.1, 1] 
+                          }}
+                          transition={{ duration: 2.5 + (index % 3), repeat: Infinity, ease: "easeInOut" }}
+                          style={{ willChange: "transform" }}
+                          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                        >
+                          <div
+                            className={`w-9 h-9 rotate-45 transition-transform group-hover:rotate-[225deg] duration-500 absolute rounded-[4px] shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.2),0_0_15px_var(--tw-shadow-color)] ${colors.solid} ${colors.glow}`}
+                            style={{ willChange: "transform" }}
+                          />
+                        </motion.div>
+                        
+                        <motion.div 
+                          animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 }}
+                          className="w-1.5 h-1.5 bg-white rounded-full absolute top-[8px] left-[10px] pointer-events-none blur-[1px] shadow-[0_0_5px_rgba(255,255,255,1)]" 
                         />
                         
-                        <div className="w-1.5 h-1.5 bg-white/60 rounded-full absolute -top-0.5 -left-0.5 pointer-events-none blur-[0.5px]" />
                         
-                        
-                        <span className="absolute text-[8.5px] font-sans font-black text-white pointer-events-none select-none uppercase tracking-tighter">
+                        <span className="absolute text-[8.5px] font-sans font-black text-white pointer-events-none select-none uppercase tracking-tighter drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] z-10 mix-blend-plus-lighter">
                           {getSkillAbbreviation(skill.name)}
                         </span>
                       </div>

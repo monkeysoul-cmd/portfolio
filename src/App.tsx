@@ -35,6 +35,50 @@ import AchievementsGrid from './components/AchievementsGrid';
 import ArcadeCabinet from './components/ArcadeCabinet';
 import ArcadeBackground from './components/ArcadeBackground';
 
+const HackerText = ({ text, className }: { text: string, className?: string }) => {
+  const [displayText, setDisplayText] = useState(text);
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerAnimation = () => {
+    let iteration = 0;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    
+    intervalRef.current = setInterval(() => {
+      setDisplayText((prev) => 
+        prev.split("").map((letter, index) => {
+          if (index < iteration) return text[index];
+          return letters[Math.floor(Math.random() * letters.length)];
+        }).join("")
+      );
+      
+      if (iteration >= text.length) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      }
+      
+      iteration += 1 / 3;
+    }, 40);
+  };
+
+  useEffect(() => {
+    const delay = setTimeout(triggerAnimation, 500);
+    return () => {
+      clearTimeout(delay);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [text]);
+
+  return (
+    <span 
+      className={className} 
+      onMouseEnter={triggerAnimation} 
+      style={{ display: 'inline-block' }}
+    >
+      {displayText}
+    </span>
+  );
+};
+
 export default function App() {
   const [gemsCount, setGemsCount] = useState(3); 
   const [scorePoints, setScorePoints] = useState(0);
@@ -158,105 +202,113 @@ export default function App() {
       </header>
 
       
-      <section className="max-w-6xl mx-auto px-4 pt-4 pb-6 text-center relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-[#ff00ff]/5 rounded-full blur-3xl -z-10" />
+      <section className="max-w-6xl mx-auto px-4 pt-12 pb-16 text-center relative min-h-[65vh] flex flex-col justify-center items-center">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-[#ff00ff]/10 rounded-full blur-[80px] -z-10 pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-[300px] h-[300px] bg-[#00ff41]/10 rounded-full blur-[60px] -z-10 pointer-events-none" />
 
         
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 bg-[#ff00ff]/10 border-2 border-[#ff00ff] px-4 py-1.5 text-[#ff00ff] text-xs font-mono mb-6 uppercase tracking-wider font-extrabold"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(255, 0, 255, 0.5)" }}
+          className="inline-flex items-center gap-2 bg-[#ff00ff]/10 border-2 border-[#ff00ff] px-5 py-2 text-[#ff00ff] text-xs font-mono mb-8 uppercase tracking-wider font-extrabold cursor-default relative overflow-hidden group"
         >
-          <Trophy className="w-3.5 h-3.5 text-[#ff00ff]" />
-          RUNNER-UP • SMART INDIA HACKATHON 2025
+          <div className="absolute inset-0 bg-[#ff00ff]/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+          <Trophy className="w-4 h-4 text-[#ff00ff] animate-bounce" />
+          <span className="relative z-10">RUNNER-UP • SMART INDIA HACKATHON 2025</span>
         </motion.div>
 
         
-        <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff41] mb-1">
-          {"Hii, i am".split('').map((char, index) => (
+        <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff41] mb-2 flex items-center justify-center gap-2">
+          <Terminal className="w-5 h-5 animate-pulse" />
+          <div>
+            {"> Hii, i am".split('').map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0, display: 'inline-block' }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.05, delay: 0.5 + index * 0.05 }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
             <motion.span
-              key={index}
-              initial={{ opacity: 0, display: 'inline-block' }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.05, delay: 0.2 + index * 0.05 }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </motion.span>
-          ))}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity, delay: 1.5 }}
+              className="inline-block w-3 h-5 bg-[#00ff41] ml-1 align-middle"
+            />
+          </div>
         </div>
 
         
         <motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="text-5xl sm:text-7xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-4 name-glitch-hover"
-          data-text="AYUSH BHATI"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-5xl sm:text-7xl md:text-8xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-6 relative drop-shadow-[0_0_15px_rgba(0,255,65,0.4)] flex justify-center"
         >
-          AYUSH BHATI
+          <HackerText text="AYUSH BHATI" />
         </motion.h2>
-
-        
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="max-w-2xl mx-auto text-xs sm:text-sm text-[#00ff41]/90 leading-relaxed font-mono mb-8 border-l-4 border-r-4 border-[#ff00ff] px-4 text-left"
-        >
-          A software developer skilled in <span className="text-[#ff00ff] font-extrabold">React.js</span>,{' '}
-          <span className="text-white font-extrabold">Next.js</span>,{' '}
-          <span className="text-[#00ff41] font-extrabold">Node.js</span>, and{' '}
-          <span className="text-[#ff00ff] font-extrabold">MongoDB</span>. I focus on building beautiful, interactive, and easy-to-use websites. I also designed an award-winning traffic simulator for SIH and an AI medical helper.
-        </motion.p>
 
         
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-10"
+          transition={{ duration: 0.6, delay: 1.5 }}
+          className="max-w-2xl mx-auto relative group mb-10"
         >
-          <a
-            href="https://github.com/monkeysoul-cmd"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
-          >
-            <Github className="w-4 h-4" />
-            GITHUB PROFILE
-          </a>
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#00ff41] to-[#ff00ff] opacity-20 blur group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+          <p className="relative bg-[#050505] text-xs sm:text-sm text-[#00ff41]/90 leading-relaxed font-mono border-l-4 border-r-4 border-[#ff00ff] px-6 py-4 text-left shadow-[0_0_15px_rgba(255,0,255,0.15)]">
+            A software developer skilled in <span className="text-[#ff00ff] font-extrabold group-hover:text-white transition-colors">React.js</span>,{' '}
+            <span className="text-white font-extrabold group-hover:text-[#00ff41] transition-colors">Next.js</span>,{' '}
+            <span className="text-[#00ff41] font-extrabold group-hover:text-[#ff00ff] transition-colors">Node.js</span>, and{' '}
+            <span className="text-[#ff00ff] font-extrabold group-hover:text-white transition-colors">MongoDB</span>. I focus on building beautiful, interactive, and easy-to-use websites. I also designed an award-winning traffic simulator for SIH and an AI medical helper.
+          </p>
+        </motion.div>
 
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
-          >
-            <Linkedin className="w-4 h-4" />
-            LINKEDIN
-          </a>
-
-          <a
-            href="mailto:ayushrajput87917@gmail.com"
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text"
-          >
-            <Mail className="w-4 h-4" />
-            EMAIL AYUSH
-          </a>
-
+        
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.8 }}
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
+          {[
+            { href: "https://github.com/monkeysoul-cmd", icon: Github, text: "GITHUB PROFILE" },
+            { href: "https://linkedin.com", icon: Linkedin, text: "LINKEDIN" },
+            { href: "mailto:ayushrajput87917@gmail.com", icon: Mail, text: "EMAIL AYUSH" },
+          ].map((link, i) => (
+            <motion.a
+              key={i}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-5 py-3 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-[#00ff41]/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+              <link.icon className="w-4 h-4 relative z-10" />
+              <span className="relative z-10">{link.text}</span>
+            </motion.a>
+          ))}
           
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => {
               logEvent('DOWNLOADING AYUSH_BHATI_RESUME.PDF...');
               triggerSound('powerup');
               alert('Initiating download of Ayush Bhati Resume representation!');
             }}
-            className="flex items-center gap-2 bg-[#111111] hover:bg-[#ff00ff] hover:text-black text-[#ff00ff] text-xs font-mono font-bold px-4 py-2.5 border-2 border-[#ff00ff] transition-all cursor-crosshair hover-glitch-text"
+            className="flex items-center gap-2 bg-[#111111] hover:bg-[#ff00ff] hover:text-black text-[#ff00ff] text-xs font-mono font-bold px-5 py-3 border-2 border-[#ff00ff] transition-all cursor-crosshair hover-glitch-text relative overflow-hidden group shadow-[0_0_10px_rgba(255,0,255,0.2)] hover:shadow-[0_0_20px_rgba(255,0,255,0.6)]"
           >
-            <FileText className="w-4 h-4" />
-            DOWNLOAD RESUME
-          </button>
+            <div className="absolute inset-0 bg-[#ff00ff]/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+            <FileText className="w-4 h-4 relative z-10" />
+            <span className="relative z-10">DOWNLOAD RESUME</span>
+          </motion.button>
         </motion.div>
       </section>
 
