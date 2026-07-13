@@ -48,7 +48,8 @@ export default function ArcadeBackground() {
           style={{
             left: `${15 + i * 18}%`,
             animation: `float-arcade-4 ${8 + i * 2}s linear infinite`,
-            animationDelay: `${i * 1.5}s`
+            animationDelay: `${i * 1.5}s`,
+            willChange: 'transform, opacity'
           }}
         >
           <Star size={24} fill="currentColor" opacity={0.2} />

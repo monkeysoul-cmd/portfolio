@@ -184,7 +184,9 @@ function TrafficSimulation() {
                   className="absolute w-2.5 h-4 rounded transition-all duration-75 flex flex-col justify-between p-0.5 shadow-md"
                   style={{
                     left: `${15 + car.lane * 25}%`,
-                    top: `${car.y}%`,
+                    top: '-10px',
+                    transform: `translateY(${car.y * 1.5}px)`,
+                    willChange: 'transform',
                     backgroundColor: car.color,
                     boxShadow: `0 0 4px ${car.color}60`,
                   }}
@@ -304,6 +306,14 @@ function HealthSimulation() {
           <span key={i} className="text-center font-extralight">+</span>
         ))}
       </div>
+      
+      <div 
+        className="absolute left-0 right-0 h-[10px] bg-gradient-to-b from-transparent via-emerald-500/30 to-transparent pointer-events-none z-0 border-y border-emerald-500/20" 
+        style={{
+          animation: 'health-scan-y 3s linear infinite',
+          willChange: 'transform'
+        }}
+      />
 
       <div className="relative z-10 w-full h-full flex flex-col gap-1.5 justify-between">
         
@@ -367,8 +377,22 @@ function HealthSimulation() {
             </div>
 
             
-            <div className="flex-1 flex flex-col justify-center py-1">
-              <div className="bg-slate-950/80 border border-slate-900 rounded p-1 text-[3.5px] leading-tight text-slate-300 relative min-h-[22px] flex items-center">
+            <div className="flex-1 flex flex-col justify-center py-1 relative overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none opacity-40">
+                {[...Array(4)].map((_, i) => (
+                  <div 
+                    key={i} 
+                    className="absolute h-[0.5px] bg-emerald-500/80 w-full" 
+                    style={{ 
+                      top: `${15 + i * 25}%`,
+                      animation: `health-scan-x ${1.5 + i * 0.5}s linear infinite`,
+                      animationDelay: `${i * 0.3}s`,
+                      willChange: 'transform'
+                    }} 
+                  />
+                ))}
+              </div>
+              <div className="bg-slate-950/80 border border-slate-900 rounded p-1 text-[3.5px] leading-tight text-slate-300 relative min-h-[22px] flex items-center z-10 shadow-[0_0_8px_rgba(0,0,0,0.5)]">
                 <p className="font-medium tracking-wide">
                   {chatMessage}
                   <span className="inline-block w-0.5 h-1.5 bg-emerald-400 ml-0.5 animate-pulse" />
