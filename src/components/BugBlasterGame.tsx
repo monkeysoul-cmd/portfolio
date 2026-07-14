@@ -325,7 +325,7 @@ export default function BugBlasterGame({
         label: template.label,
         color: template.color,
         points: template.points,
-        vx: (Math.random() * 1.4 - 0.7) * (1 + level * 0.1),
+        vx: (Math.random() * 1.0 - 0.5) * (1 + level * 0.1),
         hp: template.hp
       });
     }
@@ -394,7 +394,7 @@ export default function BugBlasterGame({
         label: template.label,
         color: template.color,
         points: template.points,
-        vx: (Math.random() * 1.4 - 0.7) * (1 + 1 * 0.1),
+        vx: (Math.random() * 1.0 - 0.5) * (1 + 1 * 0.1),
         hp: template.hp
       };
     });
@@ -482,7 +482,7 @@ export default function BugBlasterGame({
       
       enemies.current.forEach((enemy, eIdx) => {
         enemy.x += enemy.vx;
-        enemy.y += 0.4 * (1 + level * 0.1); 
+        enemy.y += 0.25 * (1 + level * 0.1); 
 
         
         if (enemy.x <= 5 || enemy.x >= width - enemy.w - 5) {

@@ -72,8 +72,8 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     paddleH: 10,
     ballX: 200,
     ballY: 250,
-    ballVX: 2.5,
-    ballVY: -4.5,
+    ballVX: 2.0,
+    ballVY: -3.5,
     ballRadius: 6,
     bricks: [] as Brick[],
     fallingGems: [] as FallingGem[],
@@ -139,8 +139,8 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
       paddleH: 10,
       ballX: canvas.width / 2,
       ballY: canvas.height - 45,
-      ballVX: (Math.random() * 2 - 1) * 2 || 2, 
-      ballVY: -4.5, 
+      ballVX: (Math.random() * 2 - 1) * 1.5 || 1.5, 
+      ballVY: -3.5, 
       ballRadius: 6,
       bricks,
       fallingGems: [],
@@ -262,7 +262,7 @@ export default function GemGame({ onScorePoints, onSoundTrigger, gemsCount }: Ge
     ) {
       
       const relativeHit = (state.ballX - (state.paddleX + state.paddleW / 2)) / (state.paddleW / 2);
-      state.ballVX = relativeHit * 4.0; 
+      state.ballVX = relativeHit * 3.0; 
       state.ballVY = -Math.abs(state.ballVY);
       state.ballY = canvas.height - 25 - state.ballRadius; 
       onSoundTrigger('laser');
