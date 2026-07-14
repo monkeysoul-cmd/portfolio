@@ -8,7 +8,7 @@ export const PROJECTS: Project[] = [
     longDescription: 'Led a 6-member team to develop a real-time traffic monitoring dashboard. Developed the entire dashboard in React.js, contributing over 70% of the codebase. It implements intelligent signal-timing logic which improves decision accuracy and cuts local congestion.',
     tags: ['React.js', 'Signal-Timing Logic', 'Tailwind CSS', 'WebSockets', 'D3.js'],
     github: 'https://github.com/monkeysoul-cmd/traffic-flow',
-    live: 'https://github.com/monkeysoul-cmd/traffic-flow', 
+    live: 'https://traffic-flow-peach.vercel.app/', 
     gemType: 'emerald',
     stats: [
       { label: 'Overall Perf', value: '+18%' },
@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
     longDescription: 'A fully self-contained smart assistant powered by natural language algorithms to evaluate patient symptoms. Developed the entire interactive UI and integrated high-speed REST APIs to support fluid, real-time client-to-server exchanges.',
     tags: ['React.js', 'AI Algorithms', 'REST APIs', 'Node.js', 'Express.js', 'State Management'],
     github: 'https://github.com/monkeysoul-cmd/Virtual-Health-Assistant',
-    live: 'https://github.com/monkeysoul-cmd/Virtual-Health-Assistant', 
+    live: 'https://virtual-health-assistant-beige.vercel.app/', 
     gemType: 'ruby',
     stats: [
       { label: 'AI Suggestion Acc', value: '+22%' },

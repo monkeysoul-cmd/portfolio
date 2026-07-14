@@ -24,7 +24,8 @@ import {
   Send,
   User,
   Clock,
-  Heart
+  Heart,
+  X
 } from 'lucide-react';
 
 import BugBlasterGame from './components/BugBlasterGame';
@@ -87,6 +88,7 @@ export default function App() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formTransmitting, setFormTransmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   
   const onSoundTriggerRef = useRef<((type: 'coin' | 'laser' | 'powerup' | 'gem') => void) | null>(null);
@@ -152,7 +154,7 @@ export default function App() {
 
       const subject = encodeURIComponent(`Contact from ${formData.name}`);
       const body = encodeURIComponent(`Sender Name: ${formData.name}\nSender Email: ${formData.email}\n\nMessage:\n${formData.message}`);
-      window.location.href = `mailto:ayushrajput87917@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=ayusrajput87917@gmail.com&su=${subject}&body=${body}`;
 
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setFormSuccess(false), 5000);
@@ -247,9 +249,10 @@ export default function App() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl sm:text-7xl md:text-8xl font-mono font-black tracking-tighter uppercase italic text-transparent retro-header mb-6 relative drop-shadow-[0_0_15px_rgba(0,255,65,0.4)] flex justify-center"
+          className="text-5xl sm:text-7xl md:text-8xl font-mono font-black tracking-tighter uppercase italic retro-header select-none name-glitch-hover mb-6 relative drop-shadow-[0_0_15px_rgba(0,255,65,0.4)] flex justify-center"
+          data-text="AYUSH BHATI"
         >
-          <HackerText text="AYUSH BHATI" />
+          AYUSH BHATI
         </motion.h2>
 
         
@@ -276,15 +279,15 @@ export default function App() {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           {[
-            { href: "https://github.com/monkeysoul-cmd", icon: Github, text: "GITHUB PROFILE" },
-            { href: "https://linkedin.com", icon: Linkedin, text: "LINKEDIN" },
-            { href: "mailto:ayushrajput87917@gmail.com", icon: Mail, text: "EMAIL AYUSH" },
+            { href: "https://github.com/monkeysoul-cmd", icon: Github, text: "GITHUB PROFILE", target: "_blank" },
+            { href: "https://www.linkedin.com/in/ayush-bhati-275b3a372/", icon: Linkedin, text: "LINKEDIN", target: "_blank" },
+            { href: "https://mail.google.com/mail/?view=cm&fs=1&to=ayusrajput87917@gmail.com", icon: Mail, text: "EMAIL AYUSH", target: "_self" },
           ].map((link, i) => (
             <motion.a
               key={i}
               href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+              target={link.target}
+              rel={link.target === "_blank" ? "noreferrer" : undefined}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 bg-[#111111] hover:bg-[#00ff41] hover:text-black text-[#00ff41] text-xs font-mono font-bold px-5 py-3 border-2 border-[#00ff41] transition-all cursor-crosshair hover-glitch-text relative overflow-hidden group"
@@ -299,15 +302,15 @@ export default function App() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              logEvent('DOWNLOADING AYUSH_BHATI_RESUME.PDF...');
+              logEvent('OPENING SECURE RESUME VIEWER...');
               triggerSound('powerup');
-              alert('Initiating download of Ayush Bhati Resume representation!');
+              setResumeOpen(true);
             }}
             className="flex items-center gap-2 bg-[#111111] hover:bg-[#ff00ff] hover:text-black text-[#ff00ff] text-xs font-mono font-bold px-5 py-3 border-2 border-[#ff00ff] transition-all cursor-crosshair hover-glitch-text relative overflow-hidden group shadow-[0_0_10px_rgba(255,0,255,0.2)] hover:shadow-[0_0_20px_rgba(255,0,255,0.6)]"
           >
             <div className="absolute inset-0 bg-[#ff00ff]/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <FileText className="w-4 h-4 relative z-10" />
-            <span className="relative z-10">DOWNLOAD RESUME</span>
+            <span className="relative z-10">VIEW RESUME</span>
           </motion.button>
         </motion.div>
       </section>
@@ -439,8 +442,8 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-3 text-slate-300">
                     <Mail className="w-4 h-4 text-rose-400 shrink-0" />
-                    <a href="mailto:ayushrajput87917@gmail.com" className="hover:underline">
-                      ayushrajput87917@gmail.com
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ayusrajput87917@gmail.com" className="hover:underline">
+                      ayusrajput87917@gmail.com
                     </a>
                   </div>
                   <div className="flex items-center gap-3 text-slate-300">
@@ -453,7 +456,7 @@ export default function App() {
               
               <div className="bg-slate-950/50 border border-slate-900 rounded-2xl p-4 flex justify-between gap-2">
                 <a
-                  href="https://leetcode.com" 
+                  href="https://leetcode.com/u/ayushbhati/" 
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 bg-slate-900 hover:bg-slate-800 text-[10px] font-mono py-2 rounded-xl text-center border border-slate-850 hover:text-white"
@@ -461,7 +464,7 @@ export default function App() {
                   LeetCode
                 </a>
                 <a
-                  href="https://www.codechef.com" 
+                  href="https://www.codechef.com/users/ayushh_24" 
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 bg-slate-900 hover:bg-slate-800 text-[10px] font-mono py-2 rounded-xl text-center border border-slate-850 hover:text-white"
@@ -493,7 +496,7 @@ export default function App() {
                       TRANSMISSION SECURED!
                     </h4>
                     <p className="text-xs text-slate-400 font-mono mt-1 max-w-[280px]">
-                      Your code package was encrypted and transmitted to ayushrajput87917@gmail.com. Connection intact.
+                      Your code package was encrypted and transmitted to ayusrajput87917@gmail.com. Connection intact.
                     </p>
                   </div>
                 )}
@@ -562,13 +565,12 @@ export default function App() {
       
       <footer className="mt-12 border-t-2 border-b-2 border-[#00ff41]/50 bg-[#111111]/70 py-3 ticker-wrap select-none">
         <div className="ticker-content text-[11px] italic font-mono uppercase tracking-widest text-[#00ff41]">
-          <span className="mx-8">INSERT_COIN_TO_HIRE</span>
-          <span className="mx-8 opacity-60 text-white">READY PLAYER ONE</span>
           <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS</span>
           <span className="mx-8 text-white">GITHUB.COM/MONKEYSOUL-CMD</span>
           <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM</span>
-          <span className="mx-8">INSERT_COIN_TO_HIRE</span>
-          <span className="mx-8 opacity-60 text-white">READY PLAYER ONE</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS</span>
+          <span className="mx-8 text-white">GITHUB.COM/MONKEYSOUL-CMD</span>
+          <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM</span>
           <span className="mx-8 text-[#ff00ff] font-bold">AVAILABLE FOR NEW PROJECTS</span>
           <span className="mx-8 text-white">GITHUB.COM/MONKEYSOUL-CMD</span>
           <span className="mx-8 text-[#ff00ff] font-bold">FULL STACK CORE SYSTEM</span>
@@ -584,6 +586,46 @@ export default function App() {
           AYUSH BHATI • ALL RIGHTS RESERVED © 2026
         </p>
       </footer>
+
+      <AnimatePresence>
+        {resumeOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/95"
+          >
+            <motion.div
+              initial={{ scale: 0.98, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="bg-[#050505] border-2 border-[#00ff41] w-full max-w-5xl h-[90vh] sm:h-[95vh] rounded-xl flex flex-col overflow-hidden relative"
+            >
+              <div className="flex items-center justify-between px-4 py-3 border-b-2 border-[#00ff41] bg-[#111111]">
+                <div className="flex items-center gap-2 text-[#00ff41] font-mono text-sm font-bold">
+                  <Terminal className="w-4 h-4" />
+                  <span>AYUSH_RESUME_DATA.PDF</span>
+                </div>
+                <button
+                  onClick={() => setResumeOpen(false)}
+                  className="text-[#ff00ff] hover:bg-[#ff00ff] hover:text-black p-1 rounded transition-colors border border-transparent hover:border-[#ff00ff]"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-1 bg-white relative z-0">
+                <iframe
+                  src="/resume.pdf"
+                  className="w-full h-full border-none"
+                  title="Ayush Bhati Resume"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
