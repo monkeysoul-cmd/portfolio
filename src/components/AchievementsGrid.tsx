@@ -34,10 +34,10 @@ export default function AchievementsGrid({ onSoundTrigger }: AchievementsGridPro
         return <Trophy className="w-5 h-5" />;
       case 'cc-star':
         return <Star className="w-5 h-5 animate-pulse" />;
-      case 'cc-global':
-        return <Globe className="w-5 h-5" />;
       case 'lc-dsa':
         return <Award className="w-5 h-5" />;
+      case 'cc-global':
+        return <Globe className="w-5 h-5" />;
       default:
         return <Sparkles className="w-5 h-5" />;
     }

@@ -312,13 +312,13 @@ export default function BugBlasterGame({
     if (!selectedProject) return;
 
     const availableBugs = currentCartridge.bugs;
-    const waveCount = level * 2 + 3;
+    const waveCount = level + 2;
 
     for (let i = 0; i < waveCount; i++) {
       const template = availableBugs[Math.floor(Math.random() * availableBugs.length)];
       enemies.current.push({
         x: Math.random() * (width - 90) + 10,
-        y: -Math.random() * 20 - 10, 
+        y: -Math.random() * 45 - 5, 
         w: 76,
         h: 22,
         type: template.type,
@@ -382,12 +382,12 @@ export default function BugBlasterGame({
     
     const activeCart = cartridges.find(c => c.id === activeProject) || cartridges[0];
     const availableBugs = activeCart.bugs;
-    const waveCount = 5; 
+    const waveCount = 3; 
     enemies.current = Array.from({ length: waveCount }, () => {
       const template = availableBugs[Math.floor(Math.random() * availableBugs.length)];
       return {
         x: Math.random() * (300 - 90) + 10,
-        y: -Math.random() * 20 - 10, 
+        y: -Math.random() * 45 - 5, 
         w: 76,
         h: 22,
         type: template.type,
@@ -482,7 +482,7 @@ export default function BugBlasterGame({
       
       enemies.current.forEach((enemy, eIdx) => {
         enemy.x += enemy.vx;
-        enemy.y += 1.3 * (1 + level * 0.2); 
+        enemy.y += 0.4 * (1 + level * 0.1); 
 
         
         if (enemy.x <= 5 || enemy.x >= width - enemy.w - 5) {
