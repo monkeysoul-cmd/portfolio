@@ -482,7 +482,7 @@ export default function BugBlasterGame({
       
       enemies.current.forEach((enemy, eIdx) => {
         enemy.x += enemy.vx;
-        enemy.y += 0.8 * (1 + level * 0.15); 
+        enemy.y += 1.3 * (1 + level * 0.2); 
 
         
         if (enemy.x <= 5 || enemy.x >= width - enemy.w - 5) {
